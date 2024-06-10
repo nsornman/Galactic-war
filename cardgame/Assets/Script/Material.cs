@@ -2,13 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Material : MonoBehaviour
+public class material : MonoBehaviour
 {
-    public string MatName;
-    public int value;
+    public int Wood;
+    public int Metal;
+    public int Concrete;
+    public int Stone;
+    public void Pay(int Woodcosts,int Metalcosts,int Concretecosts,int Stonecosts){
+        Wood -= Woodcosts;
+        Metal -= Metalcosts;
+        Concrete -= Concretecosts;
+        Stone -= Stonecosts;
+    }
 
-    public virtual void Pay(int costs){
-        value -= costs;
-        Debug.Log($"Player is paying with {MatName} for {costs} and have {value} of {MatName} left.");
-    } 
+    public void recieve(int Woodcosts,int Metalcosts,int Concretecosts,int Stonecosts){
+        Wood += Woodcosts;
+        Metal += Metalcosts;
+        Concrete += Concretecosts;
+        Stone += Stonecosts;
+    }
 }
