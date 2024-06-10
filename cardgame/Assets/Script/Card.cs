@@ -1,18 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 
-public class Card : MonoBehaviour
+[CreateAssetMenu(menuName ="Card" ,fileName ="New card")]
+public class Card : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public string Cardname;
+    public string Description;
+    public Image CardImage;
+    public Type cardtype = new Type();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public enum Type{
+        ConstuctionCard,
+        SkillCard
     }
 }
