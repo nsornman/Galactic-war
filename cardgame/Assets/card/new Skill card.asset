@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffa7e4c279cad044f9d46fd6d03b8ffb, type: 3}
   m_Name: new Skill card
   m_EditorClassIdentifier: 
-  cardname: 
+  CardName: GAY
+  CardImage: {fileID: 0}
   Description: 
-  Type: 0
+  Type: 1

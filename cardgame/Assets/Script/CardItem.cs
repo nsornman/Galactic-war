@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Microsoft.Unity.VisualStudio.Editor;
+using UnityEngine.UI;
 using UnityEngine;
 
 public enum itemtype{
@@ -11,7 +11,7 @@ public enum itemtype{
 public abstract class CardItem : ScriptableObject
 {
     public string CardName;
-    public Sprite CardSprite;
+    public Image CardImage;
     [TextArea(5,20)]
     public string Description;
     public itemtype Type = new itemtype();
