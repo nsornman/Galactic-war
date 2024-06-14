@@ -11,7 +11,7 @@ public enum itemtype{
 public abstract class CardItem : ScriptableObject
 {
     public string CardName;
-    public Image CardImage;
+    public Sprite Cardsprite;
     [TextArea(5,20)]
     public string Description;
     public itemtype Type = new itemtype();

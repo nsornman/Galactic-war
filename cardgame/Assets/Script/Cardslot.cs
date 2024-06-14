@@ -8,19 +8,19 @@ public class Cardslot : MonoBehaviour
 {
     //=======Item Data=======//
     private string itemname;
-    private Image itemimage;
+    private Sprite itemimage;
     public bool isfull = false;
 
     //=====Item Slot=====//
     [SerializeField] private TMP_Text cardname;
     [SerializeField] private Image cardimage;
 
-    public void Additem(string name, Image cardsprite){
+    public void Additem(string name, Sprite cardsprite){
         this.itemname = name;
         this.itemimage = cardsprite;
         isfull = true;
 
         cardname.text = itemname.ToString();
-        this.cardimage = itemimage;
+        this.cardimage.sprite = itemimage;
     }
 }
