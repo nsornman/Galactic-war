@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39c94353a664c2a4ea0504376b4e92d4, type: 3}
   m_Name: ABBB
   m_EditorClassIdentifier: 
-  CardName: AAA
+  CardName: ABBB
   Cardsprite: {fileID: 21300000, guid: 6781cf2a682cd4c6cbfdf21f65af50d8, type: 3}
   Description: AAA
   Type: 0
