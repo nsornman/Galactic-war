@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ffa7e4c279cad044f9d46fd6d03b8ffb, type: 3}
-  m_Name: AA
+  m_Name: Lava
   m_EditorClassIdentifier: 
-  CardName: Ice
-  Cardsprite: {fileID: 21300000, guid: 05074dacf90e44d8597777b84d5b756c, type: 3}
+  CardName: Lava
+  Cardsprite: {fileID: 21300000, guid: b379a524751334e2692944003f98a137, type: 3}
   Description: 
-  Type: 1
+  Type: 0

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffa7e4c279cad044f9d46fd6d03b8ffb, type: 3}
   m_Name: AAA
   m_EditorClassIdentifier: 
-  CardName: 
-  Cardsprite: {fileID: 0}
+  CardName: Grass
+  Cardsprite: {fileID: 21300000, guid: f5254faf18f744bbcbdf8687b6db670e, type: 3}
   Description: 
-  Type: 0
+  Type: 1

@@ -9,10 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffa7e4c279cad044f9d46fd6d03b8ffb, type: 3}
-  m_Name: AA
+  m_Script: {fileID: 11500000, guid: 39c94353a664c2a4ea0504376b4e92d4, type: 3}
+  m_Name: new Contruction card 2
   m_EditorClassIdentifier: 
-  CardName: Ice
-  Cardsprite: {fileID: 21300000, guid: 05074dacf90e44d8597777b84d5b756c, type: 3}
+  CardName: 3
+  Cardsprite: {fileID: 0}
   Description: 
-  Type: 1
+  Type: 0
+  Woodcost: 0
+  Metalcost: 0
+  Concretecost: 0
+  Stonecost: 0
