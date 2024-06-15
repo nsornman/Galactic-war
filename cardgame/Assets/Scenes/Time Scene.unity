@@ -750,6 +750,7 @@ GameObject:
   m_Component:
   - component: {fileID: 688856222}
   - component: {fileID: 688856221}
+  - component: {fileID: 688856223}
   m_Layer: 0
   m_Name: Gamemanager
   m_TagString: Untagged
@@ -769,7 +770,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1735577265edcb74b8051ba8d39f7663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mat: []
+  mat:
+  - {fileID: 898562813}
+  - {fileID: 0}
   StarterWood: 0
   StarterMetal: 0
   StarterConcrete: 0
@@ -789,6 +792,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &688856223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688856220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e175ca36d30f42429e67013e1cc4f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CS: []
+  SS: []
+  cardusing: {fileID: 0}
 --- !u!1 &691248573
 GameObject:
   m_ObjectHideFlags: 0
