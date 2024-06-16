@@ -156,6 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Block: {fileID: 0}
+  carddata: {fileID: 0}
 --- !u!65 &21953467
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -840,6 +841,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Block: {fileID: 0}
+  carddata: {fileID: 0}
 --- !u!65 &691248575
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2146,6 +2148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Block: {fileID: 0}
+  carddata: {fileID: 0}
 --- !u!65 &2005605918
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2383,6 +2386,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Block: {fileID: 0}
+  carddata: {fileID: 0}
 --- !u!65 &2102860355
 BoxCollider:
   m_ObjectHideFlags: 0

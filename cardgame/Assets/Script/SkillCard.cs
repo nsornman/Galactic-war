@@ -2,13 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu (menuName ="Card/Skill Card" ,fileName ="new Skill card")]
 public class SkillCard : CardItem
 {
-    public void Awake(){
+    public Skilltype Skilltype = new Skilltype();
+    public virtual void Awake(){
         Type = itemtype.Skillitem;
     }
     public override void Use(){
     
     }
+}
+
+public enum Skilltype{
+    Passive,
+    Active
 }
