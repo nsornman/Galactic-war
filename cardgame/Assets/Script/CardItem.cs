@@ -15,6 +15,8 @@ public abstract class CardItem : ScriptableObject
     [TextArea(5,20)]
     public string Description;
     public itemtype Type = new itemtype();
+
+    public abstract void Use();
 }
 
 

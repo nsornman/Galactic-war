@@ -8,4 +8,7 @@ public class SkillCard : CardItem
     public void Awake(){
         Type = itemtype.Skillitem;
     }
+    public override void Use(){
+    
+    }
 }
