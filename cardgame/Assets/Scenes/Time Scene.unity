@@ -157,6 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Block: {fileID: 0}
   carddata: {fileID: 0}
+  constructionCard: {fileID: 0}
 --- !u!65 &21953467
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -808,6 +809,8 @@ MonoBehaviour:
   CS: []
   SS: []
   cardusing: {fileID: 0}
+  Construct: 0
+  Skill: 0
 --- !u!1 &691248573
 GameObject:
   m_ObjectHideFlags: 0
@@ -842,6 +845,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Block: {fileID: 0}
   carddata: {fileID: 0}
+  constructionCard: {fileID: 0}
 --- !u!65 &691248575
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1600,10 +1604,8 @@ MonoBehaviour:
   constructslots: []
   card: []
   SC:
-  - {fileID: 11400000, guid: 9512dd58870b7bd45b67856b15170d4b, type: 2}
-  - {fileID: 11400000, guid: 37c5da930d8e43a4d9b18901535d5285, type: 2}
-  - {fileID: 11400000, guid: 4007938c4c967674ab13d128bc40f974, type: 2}
-  - {fileID: 11400000, guid: e5c5d83c2f7d5784bab22f1e61cbee08, type: 2}
+  - {fileID: 11400000, guid: dfe28dec5bc947d45ae67560921468ce, type: 2}
+  - {fileID: 11400000, guid: 44fd2d2728afc11468dc5880c50d3883, type: 2}
   CC:
   - {fileID: 11400000, guid: 7d6614209b1f48346b929a1dc3f3c12e, type: 2}
   - {fileID: 11400000, guid: 71054adc6270c8543a7ced9e4d58f27a, type: 2}
@@ -2149,6 +2151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Block: {fileID: 0}
   carddata: {fileID: 0}
+  constructionCard: {fileID: 0}
 --- !u!65 &2005605918
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2387,6 +2390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Block: {fileID: 0}
   carddata: {fileID: 0}
+  constructionCard: {fileID: 0}
 --- !u!65 &2102860355
 BoxCollider:
   m_ObjectHideFlags: 0

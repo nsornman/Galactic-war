@@ -8,6 +8,7 @@ public class DataTransform : MonoBehaviour
     public Contructslot[] CS;
     public Skillslot[] SS;
     public CardItem cardusing;
+    public bool Construct,Skill;
 
     void Start()
     {
@@ -17,6 +18,7 @@ public class DataTransform : MonoBehaviour
     void Update()
     {
         GetSelectedSlot();
+        GetCardtype();
     }
 
     public void GetSelectedSlot(){
@@ -56,4 +58,20 @@ public class DataTransform : MonoBehaviour
         }
         return false;
     }
+
+    public void GetCardtype(){
+    if (cardusing != null) { // Check if cardusing is not null
+        if (cardusing.Type == itemtype.Contructionitem){
+            Construct = true;
+            Skill = false;
+        } else if (cardusing.Type == itemtype.Skillitem){
+            Skill = true;
+            Construct = false;
+        }
+    } else {
+        // Handle the case when cardusing is null
+        Construct = false;
+        Skill = false;
+    }
+}
 }

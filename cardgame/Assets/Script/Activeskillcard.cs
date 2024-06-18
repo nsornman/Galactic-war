@@ -8,6 +8,7 @@ public class Activeskillcard : SkillCard
     public override void Awake()
     {
         Skilltype = Skilltype.Active;
+        base.Awake();
     }
     public override void Use()
     {

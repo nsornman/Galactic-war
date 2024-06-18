@@ -7,6 +7,7 @@ public class Passiveskillcard : SkillCard
 {
     public override void Awake(){
         Skilltype = Skilltype.Passive;
+        base.Awake();
     }
 
     public override void Use()
