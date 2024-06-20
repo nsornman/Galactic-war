@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39c94353a664c2a4ea0504376b4e92d4, type: 3}
   m_Name: new Contruction card 4
   m_EditorClassIdentifier: 
-  CardName: 5
+  CardName: Have Model
   Cardsprite: {fileID: 0}
   Description: 
   Type: 0
-  cardholder: {fileID: 0}
   Woodcost: 0
   Metalcost: 0
   Concretecost: 0
