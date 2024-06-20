@@ -8,17 +8,17 @@ using UnityEngine;
 [CreateAssetMenu (menuName ="Card/Contruction Card", fileName ="new Contruction card")]
 public class ConstructionCard : CardItem
 {
-    [HideInInspector]public GameObject cardholder;
     public int Woodcost;
     public int Metalcost;
     public int Concretecost;
     public int Stonecost;
-    
     public GameObject Model;
+    Player player;
+
     public void Awake(){
         Type = itemtype.Contructionitem;
     }
-    public override void Use(){
-        Instantiate(Model, cardholder.transform.position, quaternion.identity);
+    public void Use(Vector3 cardholderPosition){
+            Instantiate(Model , cardholderPosition, Quaternion.identity);
     }
 }

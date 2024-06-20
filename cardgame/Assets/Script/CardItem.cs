@@ -16,7 +16,6 @@ public abstract class CardItem : ScriptableObject
     public string Description;
     public itemtype Type = new itemtype();
 
-    public abstract void Use();
 }
 
 

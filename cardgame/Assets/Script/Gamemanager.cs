@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Gamemanager : MonoBehaviour
 {
-    public material[] mat;
+    public Player[] player;
     public int StarterWood;
     public int StarterMetal;
     public int StarterConcrete;
@@ -12,7 +12,7 @@ public class Gamemanager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        mat = FindObjectsOfType<material>();
+        player = FindObjectsOfType<Player>();
     }
     void Start()
     { 
@@ -25,8 +25,8 @@ public class Gamemanager : MonoBehaviour
         
     }
     public void SetCurrency(){
-        for(int i = 0;i< mat.Length;i++){
-            mat[i].recieve(StarterWood,StarterMetal,StarterConcrete,StarterStone);
+        for(int i = 0;i< player.Length;i++){
+            player[i].recieve(StarterWood,StarterMetal,StarterConcrete,StarterStone);
         }
     }
 

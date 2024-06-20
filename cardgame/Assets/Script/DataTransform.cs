@@ -9,6 +9,7 @@ public class DataTransform : MonoBehaviour
     public Skillslot[] SS;
     public CardItem cardusing;
     public bool Construct,Skill;
+    public bool placed = false;
 
     void Start()
     {
@@ -19,6 +20,7 @@ public class DataTransform : MonoBehaviour
     {
         GetSelectedSlot();
         GetCardtype();
+        CheckPlacing();
     }
 
     public void GetSelectedSlot(){
@@ -60,18 +62,31 @@ public class DataTransform : MonoBehaviour
     }
 
     public void GetCardtype(){
-    if (cardusing != null) { // Check if cardusing is not null
-        if (cardusing.Type == itemtype.Contructionitem){
-            Construct = true;
-            Skill = false;
-        } else if (cardusing.Type == itemtype.Skillitem){
-            Skill = true;
+        if (cardusing != null) { // Check if cardusing is not null
+            if (cardusing.Type == itemtype.Contructionitem){
+                Construct = true;
+                Skill = false;
+            } else if (cardusing.Type == itemtype.Skillitem){
+                Skill = true;
+                Construct = false;
+            }
+        } else {
+            // Handle the case when cardusing is null
             Construct = false;
+            Skill = false;
         }
-    } else {
-        // Handle the case when cardusing is null
-        Construct = false;
-        Skill = false;
     }
-}
+    public void CheckPlacing(){
+        if(HaveSelected() && placed){
+            for (int i = 0; i < CS.Length; i++)
+            {
+                if (CS[i].selected && CS[i].isfull)
+                {
+                    CS[i].Useitem();
+                    placed = false;
+                    return; // Exit the method once the selected card is found
+                }
+            }
+        }
+    }
 }
