@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class material : MonoBehaviour
+public class Player : MonoBehaviour
 {
     public int Wood;
     public int Metal;

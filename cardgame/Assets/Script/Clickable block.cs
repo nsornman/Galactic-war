@@ -7,14 +7,14 @@ using UnityEngine;
 public class Clickableblock : MonoBehaviour
 {
     [Header("For Debug")]
-    public GameObject Block;
+    public GameObject ModelHolder;
     public DataTransform carddata;
     public ConstructionCard constructionCard;
+    public bool havemodel = false;
     
     private void Awake()
     {
         carddata = FindObjectOfType<DataTransform>();
-        Block = this.gameObject;
     }
     public void Update(){
         SetConstruct();
@@ -23,10 +23,17 @@ public class Clickableblock : MonoBehaviour
         if(carddata.Construct){
             //Debug.Log("holding construction card");
             constructionCard = carddata.cardusing as ConstructionCard;
+        }else{
+            constructionCard = null;
         }
     }
     private void OnMouseDown(){
-        constructionCard.cardholder = Block;
-        constructionCard.Use();
+        Vector3 modelPosition = ModelHolder.transform.position;
+        if(!havemodel){
+            constructionCard.Use(modelPosition);
+
+            carddata.placed = true;
+            havemodel = true;
+        }
     }
 }

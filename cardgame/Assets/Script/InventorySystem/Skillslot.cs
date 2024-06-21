@@ -47,9 +47,6 @@ public class Skillslot : MonoBehaviour , IPointerClickHandler
         if(eventData.button == PointerEventData.InputButton.Left){
             OnLeftClick();
         }
-        if(eventData.button == PointerEventData.InputButton.Right){
-            OnRightClick();
-        }
     }
 
     void OnLeftClick(){
@@ -69,20 +66,15 @@ public class Skillslot : MonoBehaviour , IPointerClickHandler
         }
     }
 
-    void OnRightClick(){
-        if(selected){
-            Useitem();
-            selected = false;
-            SelectedPanel.SetActive(false);
-        }
-    }
-
     public void Useitem(){
         if(isfull){
             isfull = false;
             Emptyslot();
         }
-        
+        if(selected){
+            selected = false;
+            SelectedPanel.SetActive(false);
+        }
     }
     void Emptyslot(){
         this.cardname.text = "Emptycard";
