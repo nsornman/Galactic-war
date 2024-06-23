@@ -13,12 +13,14 @@ public class ConstructionCard : CardItem
     public int Concretecost;
     public int Stonecost;
     public GameObject Model;
+    [HideInInspector] public GameObject Instantiatemodel;
     Player player;
 
     public void Awake(){
         Type = itemtype.Contructionitem;
     }
-    public void Use(Vector3 cardholderPosition){
-            Instantiate(Model , cardholderPosition, Quaternion.identity);
+    public GameObject Use(Vector3 cardholderPosition){
+        Instantiatemodel = Instantiate(Model, cardholderPosition, Quaternion.identity);
+        return Instantiatemodel;
     }
 }

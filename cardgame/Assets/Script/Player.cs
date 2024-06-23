@@ -21,4 +21,10 @@ public class Player : MonoBehaviour
         Concrete += Concretecosts;
         Stone += Stonecosts;
     }
+    public void ResetMat(){
+        Wood =  0;
+        Metal = 0;
+        Concrete = 0;
+        Stone = 0;
+    }
 }
