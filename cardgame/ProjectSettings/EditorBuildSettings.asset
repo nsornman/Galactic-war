@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/UI MainMenu.unity
     guid: 7a24719b9f34e4b4388dbb396c88e18a
+  - enabled: 1
+    path: Assets/Scenes/UI ModeMenu.unity
+    guid: b92f6dacec02f834383b598dd0da1e1b
+  - enabled: 1
+    path: Assets/Scenes/UI Select Character Menu.unity
+    guid: 6e363cd4735a34842bf1e309613d1fad
   m_configObjects: {}
