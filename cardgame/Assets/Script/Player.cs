@@ -4,25 +4,29 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public float CostMultiplier;
+    public float GainMultiplier;
     public int Wood;
     public int Metal;
     public int Concrete;
     public int Stone;
-    public void Pay(int Woodcosts,int Metalcosts,int Concretecosts,int Stonecosts){
-        Wood -= Woodcosts;
-        Metal -= Metalcosts;
-        Concrete -= Concretecosts;
-        Stone -= Stonecosts;
+
+    public void Pay(int Woodcosts, int Metalcosts, int Concretecosts, int Stonecosts){
+        Wood -= Mathf.RoundToInt(Woodcosts * CostMultiplier);
+        Metal -= Mathf.RoundToInt(Metalcosts * CostMultiplier);
+        Concrete -= Mathf.RoundToInt(Concretecosts * CostMultiplier);
+        Stone -= Mathf.RoundToInt(Stonecosts * CostMultiplier);
     }
 
-    public void recieve(int Woodcosts,int Metalcosts,int Concretecosts,int Stonecosts){
-        Wood += Woodcosts;
-        Metal += Metalcosts;
-        Concrete += Concretecosts;
-        Stone += Stonecosts;
+    public void Recieve(int Woodcosts, int Metalcosts, int Concretecosts, int Stonecosts){
+        Wood += Mathf.RoundToInt(Woodcosts * GainMultiplier);
+        Metal += Mathf.RoundToInt(Metalcosts * GainMultiplier);
+        Concrete += Mathf.RoundToInt(Concretecosts * GainMultiplier);
+        Stone += Mathf.RoundToInt(Stonecosts * GainMultiplier);
     }
+
     public void ResetMat(){
-        Wood =  0;
+        Wood = 0;
         Metal = 0;
         Concrete = 0;
         Stone = 0;
