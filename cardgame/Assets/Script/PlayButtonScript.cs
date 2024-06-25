@@ -8,6 +8,11 @@ public class PlayButtonScript : MonoBehaviour
 {
     public void PlayGame()
     {
-        SceneManager.LoadSceneAsync(1);
+        SceneManager.LoadSceneAsync(2);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
