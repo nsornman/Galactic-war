@@ -7,12 +7,14 @@ using UnityEngine;
 public class Clickableblock : MonoBehaviour
 {
     public bool hasDestroyed = false;
+    public GameObject BuildableBlock;
+    public GameObject AttackableBlock;
     [Header("For Debug")]
     public GameObject ModelHolder;
     public DataTransform carddata;
     public ConstructionCard constructionCard;
     private GameObject instantiated;
-    [SerializeField] private ConstructionCard blockdata;
+    [HideInInspector]public ConstructionCard blockdata;
     public bool havemodel = false;
     
     private void Awake()
@@ -32,14 +34,16 @@ public class Clickableblock : MonoBehaviour
         }
     }
     private void OnMouseDown(){
-        if(constructionCard != null){
-            Vector3 modelPosition = ModelHolder.transform.position;
-            blockdata = constructionCard;
-            if(!havemodel){
-                blockdata.Use(modelPosition);
-                instantiated = blockdata.Instantiatemodel;
-                carddata.placed = true;
-                havemodel = true;
+        if(!hasDestroyed){
+            if(constructionCard != null){
+                Vector3 modelPosition = ModelHolder.transform.position;
+                blockdata = constructionCard;
+                if(!havemodel){
+                    blockdata.Use(modelPosition);
+                    instantiated = blockdata.Instantiatemodel;
+                    carddata.placed = true;
+                    havemodel = true;
+                }
             }
         }
     }
@@ -51,14 +55,14 @@ public class Clickableblock : MonoBehaviour
     }
     public void CheckDestroyed(){
         if(hasDestroyed){
-            this.gameObject.SetActive(false);
+            BuildableBlock.SetActive(false);
             this.blockdata = null;
             if(havemodel){
                 Destroy(instantiated);
                 havemodel = false;
             }
         }else{
-            this.gameObject.SetActive(true);
+            BuildableBlock.SetActive(true);
         }
     }
 }

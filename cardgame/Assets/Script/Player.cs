@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public float attackcount = 3;
     public float CostMultiplier;
     public float GainMultiplier;
     public int Wood;
@@ -30,5 +31,8 @@ public class Player : MonoBehaviour
         Metal = 0;
         Concrete = 0;
         Stone = 0;
+    }
+    public void ResetAttackCount(float attackcount){
+        this.attackcount = attackcount;
     }
 }

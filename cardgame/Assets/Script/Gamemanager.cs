@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class Gamemanager : MonoBehaviour
 {
+    
+    [Header("Assign Games Variable")]
+    public int StarterWood;
+    public int StarterMetal;
+    public int StarterConcrete;
+    public int StarterStone;
+    public int Attackperround;
+    [Header("Assign GameObjects")]
     public GameObject attackposition;
     public GameObject playerposition;
     public GameObject ChangeUI;
     public GameObject cardUI;
     public GameObject Playerself;
-    public Player[] player;
-    public Clickableblock[] clickableblocks;
-    public int StarterWood;
-    public int StarterMetal;
-    public int StarterConcrete;
-    public int StarterStone;
+    private Player[] player;
+    private Clickableblock[] clickableblocks;
     [Header("For Debug")]
     public bool changing;
     public float changeTime = 30f;
@@ -133,6 +137,9 @@ public class Gamemanager : MonoBehaviour
 
     public void StartAttackPhase()
     {
+        for(int i = 0;i< player.Length; i++){
+            player[i].ResetAttackCount(Attackperround);
+        }
         Warpto(attackposition);
         Debug.Log("Setting cardUI to inactive");
         if (cardUI != null)
