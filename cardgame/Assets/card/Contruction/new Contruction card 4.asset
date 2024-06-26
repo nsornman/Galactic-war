@@ -21,3 +21,5 @@ MonoBehaviour:
   Concretecost: 0
   Stonecost: 0
   Model: {fileID: 919132149155446097, guid: 13bd9962aed9bef41bc2dd73a559c317, type: 3}
+  HP: 1
+  Instantiatemodel: {fileID: 0}
