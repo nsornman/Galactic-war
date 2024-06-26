@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1af6a19d4db20cf4ebce2f067f168bab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HP: 0
   hasDestroyed: 0
   BuildableBlock: {fileID: 3422841900750079816}
   AttackableBlock: {fileID: 7188132131737977452}
@@ -300,10 +301,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7ca9fd7089019c4db1aa6b19f2076c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DamageDealt: 1
   motherBlock: {fileID: 3422841900750079816}
   dataContainer: {fileID: 5817358459520281040}
-  haveModel: {r: 1, g: 0, b: 0, a: 1}
-  noModel: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 1}
+  Break: {r: 1, g: 0, b: 0, a: 1}
+  Marked: {r: 1, g: 0.93064964, b: 0.4669811, a: 1}
   Clicked: 0
 --- !u!1 &8003582429740861005
 GameObject:

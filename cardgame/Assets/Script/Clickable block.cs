@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Clickableblock : MonoBehaviour
 {
+    public int HP;
     public bool hasDestroyed = false;
     public GameObject BuildableBlock;
     public GameObject AttackableBlock;
@@ -24,6 +25,9 @@ public class Clickableblock : MonoBehaviour
     public void Update(){
         CheckDestroyed();
         SetConstruct();
+        if(blockdata != null){
+            this.HP = blockdata.HP; //for testing
+        }
     }
     public void SetConstruct(){
         if(carddata.Construct){
@@ -46,6 +50,13 @@ public class Clickableblock : MonoBehaviour
                 }
             }
         }
+    }
+    public void DecreseHP(int damage){
+        if(HP >= 0) HP-= damage;
+        else Destroyed();
+    }
+    public void IncreaseHP(int HP){
+        this.HP += HP;
     }
     public void Destroyed(){
         hasDestroyed = true;

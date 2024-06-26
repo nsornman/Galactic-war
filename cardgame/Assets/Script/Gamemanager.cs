@@ -6,6 +6,8 @@ public class Gamemanager : MonoBehaviour
 {
     
     [Header("Assign Games Variable")]
+    public int StartingCC = 5;
+    public int StartingSC = 3;
     public int StarterWood;
     public int StarterMetal;
     public int StarterConcrete;
@@ -17,7 +19,7 @@ public class Gamemanager : MonoBehaviour
     public GameObject ChangeUI;
     public GameObject cardUI;
     public GameObject Playerself;
-    private Player[] player;
+    [SerializeField] private Player[] player;
     private Clickableblock[] clickableblocks;
     [Header("For Debug")]
     public bool changing;
@@ -38,12 +40,22 @@ public class Gamemanager : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(Waitfor());
+    }
+    // void FixedUpdate()
+    // {
+    //     SetNewLives();
+    // }
+    IEnumerator Waitfor(){
+        yield return new WaitUntil(StartBuildingPhase);
         SetNewLives();
-        StartBuildingPhase();
     }
 
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.F)){
+            SetNewLives();
+        }
         if (!changing)
         {
             CheckPhase();
@@ -63,6 +75,7 @@ public class Gamemanager : MonoBehaviour
     {
         SetBlock();
         SetMats();
+        SetUpCard();
     }
 
     public void SetBlock()
@@ -71,6 +84,14 @@ public class Gamemanager : MonoBehaviour
         {
             clickableblocks[i].Destroyed();
             clickableblocks[i].NewBlock();
+        }
+    }
+    public void SetUpCard(){
+        for(int i = 0;i< player.Length;i++){
+            if(player[i].inventoryManager != null){
+                player[i].SetCard(StartingCC , StartingSC);
+               // Debug.Log("Seting up the card......");
+            }
         }
     }
 
@@ -114,49 +135,52 @@ public class Gamemanager : MonoBehaviour
         return false;
     }
 
-    public void StartBuildingPhase()
+    public bool StartBuildingPhase()
     {
         Warpto(playerposition);
-        Debug.Log("Setting cardUI to active");
+        //Debug.Log("Setting cardUI to active");
         if (cardUI != null)
         {
-            Debug.Log("cardUI is not null, activating");
+            //Debug.Log("cardUI is not null, activating");
             cardUI.SetActive(true);
         }
         else
         {
-            Debug.Log("cardUI is null, cannot activate");
+            //Debug.Log("cardUI is null, cannot activate");
         }
         ChangeUI.SetActive(false);
         Building = true;
         Attacking = false;
         currentPhase = GamePhase.Building;
         Timerunner = 0f;
-        Debug.Log("Building Phase Started");
+        //Debug.Log("Building Phase Started");
+        return true;
     }
 
     public void StartAttackPhase()
     {
         for(int i = 0;i< player.Length; i++){
             player[i].ResetAttackCount(Attackperround);
+            player[i].Hit = 0;
+            player[i].ShowedLog = false;
         }
         Warpto(attackposition);
-        Debug.Log("Setting cardUI to inactive");
+        //Debug.Log("Setting cardUI to inactive");
         if (cardUI != null)
         {
-            Debug.Log("cardUI is not null, deactivating");
+            //Debug.Log("cardUI is not null, deactivating");
             cardUI.SetActive(false);
         }
         else
         {
-            Debug.Log("cardUI is null, cannot deactivate");
+            //Debug.Log("cardUI is null, cannot deactivate");
         }
         ChangeUI.SetActive(false);
         Building = false;
         Attacking = true;
         currentPhase = GamePhase.Attacking;
         Timerunner = 0f;
-        Debug.Log("Attack Phase Started");
+        //Debug.Log("Attack Phase Started");
     }
 
     public void EndGame()
@@ -168,10 +192,10 @@ public class Gamemanager : MonoBehaviour
     private IEnumerator ChangePhaseAfterDelay(GamePhase newPhase)
     {
         changing = true;
-        Debug.Log("Waiting for change time...");
+        //Debug.Log("Waiting for change time...");
         ChangeUI.SetActive(true);
         yield return new WaitForSeconds(changeTime);
-        Debug.Log("Change time elapsed. Changing phase.");
+        //Debug.Log("Change time elapsed. Changing phase.");
         changing = false;
 
         if (newPhase == GamePhase.Building)

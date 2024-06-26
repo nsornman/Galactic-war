@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 
 public class AttackableBlock : MonoBehaviour
 {
+    public int DamageDealt = 1;
     public GameObject motherBlock;
     public Clickableblock dataContainer;
-    public Color haveModel;
-    public Color noModel;
+    public Color Break;
+    public Color Marked;
     public bool Clicked;
     private Player Enemyplayer;
 
@@ -23,24 +23,33 @@ public class AttackableBlock : MonoBehaviour
     }
 
     public void CheckType(){ // should be some Active skill code somewhere in here
-        if(dataContainer.blockdata == null){
-            NoStructure();
-        }else{
-            HaveStructure();
-        }
-        Enemyplayer.attackcount -=1;
-    }
-    void HaveStructure()
-    {
-        SetColor(haveModel);
+        if(dataContainer.blockdata != null){
+            AttackHit();
 
-        Clicked = true;
-        dataContainer.Destroyed();
+        }else{
+            AttackNotHit();
+        }
+        
     }
-    void NoStructure(){
-        SetColor(noModel);
+    void AttackNotHit(){
+        SetColor(Marked);
         Clicked = true;
-        dataContainer.Destroyed();
+        Enemyplayer.attackcount -= 1;
+        Debug.Log("Not Hit Anything");
+    }
+    void AttackHit()
+    {
+        dataContainer.DecreseHP(DamageDealt);
+        if(dataContainer.HP > 0){
+            SetColor(Marked);
+            Debug.Log("Hit but NotDestroyed");
+        }else{
+            SetColor(Break);
+            Debug.Log("Hit and Destroyed");
+        }
+        Clicked = true;
+        Enemyplayer.attackcount -= 1;
+        Enemyplayer.Hit += 1;
     }
     void SetColor(Color color){
         // Create a new MaterialPropertyBlock

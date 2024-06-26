@@ -89,7 +89,7 @@ public class Skillslot : MonoBehaviour , IPointerClickHandler
         }
     }
     void Emptyslot(){
-        this.cardname.text = "Emptycard";
+        this.cardname.text = " ";
         this.cardimage.gameObject.SetActive(false);
     }
 }

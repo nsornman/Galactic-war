@@ -13,8 +13,8 @@ public class ConstructionCard : CardItem
     public int Concretecost;
     public int Stonecost;
     public GameObject Model;
+    public int HP;
     [HideInInspector] public GameObject Instantiatemodel;
-    Player player;
 
     public void Awake(){
         Type = itemtype.Contructionitem;
