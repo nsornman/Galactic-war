@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayButtonScript : MonoBehaviour
+
 {
     public void PlayGame()
     {
@@ -14,5 +15,15 @@ public class PlayButtonScript : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void QuitMenu()
+    {
+        SceneManager.LoadSceneAsync(1);
+    }
+
+    public void Modemenu()
+    {
+        SceneManager.LoadSceneAsync(3);
     }
 }
