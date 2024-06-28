@@ -7,15 +7,17 @@ using UnityEngine;
 public class Clickableblock : MonoBehaviour
 {
     public int HP;
+    public int maxHP;
+    public int HPDifference;
     public bool hasDestroyed = false;
     public GameObject BuildableBlock;
     public GameObject AttackableBlock;
     [Header("For Debug")]
     public GameObject ModelHolder;
-    public DataTransform carddata;
-    public ConstructionCard constructionCard;
+    [HideInInspector] public DataTransform carddata;
+    [HideInInspector] public ConstructionCard constructionCard;
     private GameObject instantiated;
-    [HideInInspector]public ConstructionCard blockdata;
+    public ConstructionCard blockdata;  //actual real time blockcard data
     public bool havemodel = false;
     
     private void Awake()
@@ -25,8 +27,9 @@ public class Clickableblock : MonoBehaviour
     public void Update(){
         CheckDestroyed();
         SetConstruct();
-        if(blockdata != null){
-            this.HP = blockdata.HP; //for testing
+        if(this.blockdata != null)
+        {
+            this.blockdata.construction.clickableblock = this.gameObject.GetComponent<Clickableblock>();
         }
     }
     public void SetConstruct(){
@@ -47,17 +50,26 @@ public class Clickableblock : MonoBehaviour
                     instantiated = blockdata.Instantiatemodel;
                     carddata.placed = true;
                     havemodel = true;
+                    // Set maxHP to blockdata's healthPoint when the model is instantiated
+                    maxHP = blockdata.construction.healthPoint;
+                    HP = maxHP; // Initialize current HP to max HP
                 }
             }
         }
     }
-    public void DecreseHP(int damage){
-        if(HP >= 0) HP-= damage;
+    public void DecreaseHP(int damage){
+        if(HP >= 0){
+            HP-= damage;
+            HPDifference += 1;
+        }
         else Destroyed();
     }
-    public void IncreaseHP(int HP){
-        this.HP += HP;
+    public void IncreaseHP(int increaseAmount){
+        this.HP += increaseAmount;
+        this.maxHP += increaseAmount;
+        if (HP > maxHP) HP = maxHP;
     }
+
     public void Destroyed(){
         hasDestroyed = true;
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float attackcount = 3;
+    public float attackcount;
     public float CostMultiplier;
     public float GainMultiplier;
     public int Wood;

@@ -349,19 +349,20 @@ MonoBehaviour:
   StarterMetal: 0
   StarterConcrete: 0
   StarterStone: 0
-  Attackperround: 3
   attackposition: {fileID: 540433163}
   playerposition: {fileID: 1627453456}
   ChangeUI: {fileID: 891793364}
   cardUI: {fileID: 1444768126}
   Playerself: {fileID: 898562811}
   player: []
+  construction: []
   changing: 0
-  changeTime: 3
+  changeTime: 0
   Attacking: 0
   attackTime: 20
   Building: 0
   buildingTime: 20
+  FreeAttackperround: 0
   Timerunner: 0
 --- !u!4 &688856222
 Transform:

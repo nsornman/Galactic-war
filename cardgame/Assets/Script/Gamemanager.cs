@@ -12,7 +12,7 @@ public class Gamemanager : MonoBehaviour
     public int StarterMetal;
     public int StarterConcrete;
     public int StarterStone;
-    public int Attackperround;
+    
     [Header("Assign GameObjects")]
     public GameObject attackposition;
     public GameObject playerposition;
@@ -21,6 +21,7 @@ public class Gamemanager : MonoBehaviour
     public GameObject Playerself;
     [SerializeField] private Player[] player;
     private Clickableblock[] clickableblocks;
+    [SerializeField] private Construction[] construction;
     [Header("For Debug")]
     public bool changing;
     public float changeTime = 30f;
@@ -28,6 +29,7 @@ public class Gamemanager : MonoBehaviour
     public float attackTime = 60f;
     public bool Building;
     public float buildingTime = 60f;
+    public int FreeAttackperround;
     [SerializeField] private float Timerunner;
     private enum GamePhase { None, Building, Attacking }
     private GamePhase currentPhase;
@@ -61,6 +63,10 @@ public class Gamemanager : MonoBehaviour
             CheckPhase();
         }
     }
+    void FixedUpdate(){
+        construction = FindObjectsOfType<Construction>();
+    }
+    
 
     public void SetMats()
     {
@@ -152,7 +158,7 @@ public class Gamemanager : MonoBehaviour
         Building = true;
         Attacking = false;
         currentPhase = GamePhase.Building;
-        Timerunner = 0f;
+        Timerunner = 0f; //Start Counting
         //Debug.Log("Building Phase Started");
         return true;
     }
@@ -160,27 +166,22 @@ public class Gamemanager : MonoBehaviour
     public void StartAttackPhase()
     {
         for(int i = 0;i< player.Length; i++){
-            player[i].ResetAttackCount(Attackperround);
+            player[i].ResetAttackCount(FreeAttackperround);
             player[i].Hit = 0;
             player[i].ShowedLog = false;
         }
         Warpto(attackposition);
-        //Debug.Log("Setting cardUI to inactive");
+        UseConstructPerk();
+
         if (cardUI != null)
         {
-            //Debug.Log("cardUI is not null, deactivating");
             cardUI.SetActive(false);
-        }
-        else
-        {
-            //Debug.Log("cardUI is null, cannot deactivate");
         }
         ChangeUI.SetActive(false);
         Building = false;
         Attacking = true;
         currentPhase = GamePhase.Attacking;
-        Timerunner = 0f;
-        //Debug.Log("Attack Phase Started");
+        Timerunner = 0f; // Start Count
     }
 
     public void EndGame()
@@ -211,5 +212,11 @@ public class Gamemanager : MonoBehaviour
     private void Warpto(GameObject position)
     {
         Playerself.transform.position = position.transform.position;
+    }
+
+    public void UseConstructPerk(){
+        for(int i = 0;i< construction.Length; i++){
+            construction[i].OnUse();
+        }
     }
 }

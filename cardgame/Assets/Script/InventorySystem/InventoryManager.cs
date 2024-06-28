@@ -47,7 +47,7 @@ public class InventoryManager : MonoBehaviour
         for(int i= 0;i< SkillCard;i++){
             AddSkillitem(SC[randomSCindice()]);
         }
-        Debug.Log("HI");
+        //Debug.Log("HI");
     }
     public int randomSCindice(){
         if (SC.Length == 0)

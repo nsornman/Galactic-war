@@ -39,7 +39,7 @@ public class AttackableBlock : MonoBehaviour
     }
     void AttackHit()
     {
-        dataContainer.DecreseHP(DamageDealt);
+        dataContainer.DecreaseHP(DamageDealt);
         if(dataContainer.HP > 0){
             SetColor(Marked);
             Debug.Log("Hit but NotDestroyed");
