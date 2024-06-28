@@ -13,8 +13,12 @@ public class InventoryManager : MonoBehaviour
     public ConstructionCard[] CC;
     void Start()
     {
-        skillslots = FindObjectsOfType<Skillslot>();
-        constructslots = FindObjectsOfType<Contructslot>();
+        // skillslots = FindObjectsOfType<Skillslot>();
+        // constructslots = FindObjectsOfType<Contructslot>();
+        if (SC.Length == 0 || CC.Length == 0)
+        {
+            Debug.LogError("SkillCard or ConstructionCard arrays are not populated!");
+        }
     }
     public void Update()
     {
@@ -34,6 +38,16 @@ public class InventoryManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.E)){
             EmptyAllSlot();
         }
+    }
+
+    public void StartCard(int ConstructCard ,int SkillCard){
+        for(int i = 0;i< ConstructCard;i++){
+            AddConstructitem(CC[randomCCindice()]);
+        }
+        for(int i= 0;i< SkillCard;i++){
+            AddSkillitem(SC[randomSCindice()]);
+        }
+        Debug.Log("HI");
     }
     public int randomSCindice(){
         if (SC.Length == 0)

@@ -77,7 +77,7 @@ public class Contructslot : MonoBehaviour, IPointerClickHandler
         }
     }
     void Emptyslot(){
-        this.cardname.text = "Emptycard";
+        this.cardname.text = " ";
         this.cardimage.gameObject.SetActive(false);
     }
 }
