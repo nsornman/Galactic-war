@@ -7,22 +7,21 @@ using UnityEngine;
 public class ConstructionCard : CardItem
 {
     [Header("Assign Variable")]
-    public int Hpcap;
+    public int Levelcap;
     public int Woodcost;
     public int Metalcost;
     public int Concretecost;
     public int Stonecost;
     [Header("Assign Prefab")]
     public GameObject Model;
-    public Construction construction;
+    //public Construction construction;
     
     [HideInInspector] public GameObject Instantiatemodel;
 
     public void Awake(){
         Type = itemtype.Contructionitem;
-        construction = this.Model.GetComponent<Construction>();
     }
-    public GameObject Use(Vector3 cardholderPosition){
+    public GameObject Use(Vector3 cardholderPosition , Transform transformParent){
         if(Model != null){
             Renderer ModelRenderer = Model.GetComponent<Renderer>();
 
@@ -30,10 +29,10 @@ public class ConstructionCard : CardItem
                 float modelHeight = ModelRenderer.bounds.size.y;
 
                 Vector3 AdjustedPosition = cardholderPosition + new Vector3(0, modelHeight /2, 0);
-                Instantiatemodel = Instantiate(Model, AdjustedPosition , Quaternion.identity);
+                Instantiatemodel = Instantiate(Model, AdjustedPosition , Quaternion.identity , transformParent);
             }
             else{
-                Instantiatemodel = Instantiate(Model, cardholderPosition, Quaternion.identity);
+                Instantiatemodel = Instantiate(Model, cardholderPosition, Quaternion.identity , transformParent);
             }
         }
         

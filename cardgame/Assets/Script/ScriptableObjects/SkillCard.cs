@@ -1,17 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public abstract class SkillCard : CardItem
+[CreateAssetMenu(menuName ="Card/Skill Card" ,fileName ="New Skill Card")]
+public class SkillCard : CardItem
 {
-    public Skilltype Skilltype = new Skilltype();
-    public virtual void Awake(){
+    public GameObject SkillObject;
+    public void Awake(){
         Type = itemtype.Skillitem;
     }
-    public abstract void Use();
-}
-
-public enum Skilltype{
-    Passive,
-    Active
+    public void OnUse(Transform SkillRelease){
+        Instantiate(SkillObject ,SkillRelease);
+    }
 }

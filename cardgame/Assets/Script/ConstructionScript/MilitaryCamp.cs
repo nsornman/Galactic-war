@@ -25,8 +25,8 @@ public class MilitaryCamp : Construction
                 break;
         }
     }
-    public void OnMouseDown()
-    {
-        Onleveling();
-    }
+    // public void OnMouseDown()
+    // {
+    //     Onleveling();
+    // }
 }

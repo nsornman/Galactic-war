@@ -7,20 +7,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39c94353a664c2a4ea0504376b4e92d4, type: 3}
-  m_Name: new Contruction card 2
+  m_Name: MC
   m_EditorClassIdentifier: 
-  CardName: Farm
-  Cardsprite: {fileID: 21300000, guid: 9943b0ce3d2e35d418df02c1c410ba79, type: 3}
+  CardName: Military Camp
+  Cardsprite: {fileID: 21300000, guid: 9804c01c23859fb4ab67c2de8816b9fe, type: 3}
   Description: 
   Type: 0
-  Hpcap: 4
-  Woodcost: 0
-  Metalcost: 0
+  Levelcap: 3
+  Woodcost: 10
+  Metalcost: 10
   Concretecost: 0
   Stonecost: 0
-  Model: {fileID: 4807256787806306184, guid: 320189b4d23df5c40bb71131c2112a79, type: 3}
-  construction: {fileID: 2115076769864375277, guid: 320189b4d23df5c40bb71131c2112a79, type: 3}
+  Model: {fileID: 5961203566370139781, guid: 933197adb36b64e4ab44471ac9d056d9, type: 3}
   Instantiatemodel: {fileID: 0}

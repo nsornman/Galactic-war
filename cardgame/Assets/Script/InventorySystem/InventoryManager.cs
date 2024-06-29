@@ -126,5 +126,15 @@ public class InventoryManager : MonoBehaviour
             constructslots[i].Useitem();
         }
     }
+    public void addrandomSkill(){
+        AddSkillitem(SC[randomSCindice()]);
+    }
+    public void AddfromRandomArr(bool SkillorConstruct){
+        if(SkillorConstruct){
+            AddSkillitem(SC[randomSCindice()]);
+        }else{
+            AddConstructitem(CC[randomCCindice()]);
+        }
+    }
 
 }

@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0595f9da9c1444e4e8a2c34a5f601cd7, type: 3}
-  m_Name: Kim
+  m_Script: {fileID: 11500000, guid: ffa7e4c279cad044f9d46fd6d03b8ffb, type: 3}
+  m_Name: C
   m_EditorClassIdentifier: 
-  CardName: Kim
-  Cardsprite: {fileID: 0}
+  CardName: DecreaseCost
+  Cardsprite: {fileID: 21300000, guid: f5254faf18f744bbcbdf8687b6db670e, type: 3}
   Description: 
-  Type: 0
-  Skilltype: 0
+  Type: 1
+  SkillObject: {fileID: 1670762575527902800, guid: 25fd0d72b4775074c9920ada0189694a, type: 3}

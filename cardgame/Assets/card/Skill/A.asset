@@ -9,13 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0595f9da9c1444e4e8a2c34a5f601cd7, type: 3}
-  m_Name: aadada
+  m_Script: {fileID: 11500000, guid: ffa7e4c279cad044f9d46fd6d03b8ffb, type: 3}
+  m_Name: A
   m_EditorClassIdentifier: 
-  CardName: 
-  Cardsprite: {fileID: 0}
+  CardName: Drawer
+  Cardsprite: {fileID: 21300000, guid: 47c7de82153b24963aec8caba52513fb, type: 3}
   Description: 
-  Type: 0
-  Skilltype: 0
-  passivetype: 0
-  waysToAffected: 0
+  Type: 1
+  SkillObject: {fileID: 8681603236697516431, guid: ad140d61dc976fc4a9da53694ea0fa3f, type: 3}

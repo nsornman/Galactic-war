@@ -10,13 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39c94353a664c2a4ea0504376b4e92d4, type: 3}
-  m_Name: new Contruction card 1
+  m_Name: CG
   m_EditorClassIdentifier: 
-  CardName: 2
-  Cardsprite: {fileID: 0}
+  CardName: Central Government
+  Cardsprite: {fileID: 21300000, guid: ecd36c7ba0e06534da0e7984cc4c9433, type: 3}
   Description: 
   Type: 0
-  Woodcost: 0
+  Levelcap: 2
+  Woodcost: 15
   Metalcost: 0
   Concretecost: 0
-  Stonecost: 0
+  Stonecost: 5
+  Model: {fileID: 449553466632799441, guid: 7a94054e51d450c48a079be32fbd3d70, type: 3}
+  Instantiatemodel: {fileID: 0}

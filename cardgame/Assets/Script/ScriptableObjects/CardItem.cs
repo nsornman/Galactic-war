@@ -8,7 +8,7 @@ public enum itemtype{
     Skillitem
 }
 
-public abstract class CardItem : ScriptableObject
+public class CardItem : ScriptableObject
 {
     public string CardName;
     public Sprite Cardsprite;

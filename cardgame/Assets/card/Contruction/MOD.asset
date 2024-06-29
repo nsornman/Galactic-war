@@ -10,17 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39c94353a664c2a4ea0504376b4e92d4, type: 3}
-  m_Name: new Contruction card 3
+  m_Name: MOD
   m_EditorClassIdentifier: 
-  CardName: Military Camp
-  Cardsprite: {fileID: 21300000, guid: 9804c01c23859fb4ab67c2de8816b9fe, type: 3}
+  CardName: MOD
+  Cardsprite: {fileID: 21300000, guid: 7a7af133befde2a44ae4b0f89f66c86b, type: 3}
   Description: 
   Type: 0
-  Hpcap: 5
-  Woodcost: 0
+  Levelcap: 2
+  Woodcost: 10
   Metalcost: 0
   Concretecost: 0
-  Stonecost: 0
-  Model: {fileID: 5961203566370139781, guid: 933197adb36b64e4ab44471ac9d056d9, type: 3}
-  construction: {fileID: 4987711286503274819, guid: 933197adb36b64e4ab44471ac9d056d9, type: 3}
+  Stonecost: 10
+  Model: {fileID: 8635539484055462765, guid: 38d4277f81111f545a371893ad04e95b, type: 3}
   Instantiatemodel: {fileID: 0}

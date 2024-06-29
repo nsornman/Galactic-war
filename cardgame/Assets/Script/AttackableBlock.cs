@@ -39,12 +39,12 @@ public class AttackableBlock : MonoBehaviour
     }
     void AttackHit()
     {
-        dataContainer.DecreaseHP(DamageDealt);
-        if(dataContainer.HP > 0){
-            SetColor(Marked);
+        dataContainer.DecreaseHP(DamageDealt * Enemyplayer.DamageMultiplier);
+        if(dataContainer.HP <= 0){
+            SetColor(Break);
             Debug.Log("Hit but NotDestroyed");
         }else{
-            SetColor(Break);
+            SetColor(Marked);
             Debug.Log("Hit and Destroyed");
         }
         Clicked = true;

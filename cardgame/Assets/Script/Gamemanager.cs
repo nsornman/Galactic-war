@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Gamemanager : MonoBehaviour
@@ -22,16 +23,20 @@ public class Gamemanager : MonoBehaviour
     [SerializeField] private Player[] player;
     private Clickableblock[] clickableblocks;
     [SerializeField] private Construction[] construction;
-    [Header("For Debug")]
+    private PassiveSkill[] passiveSkill;
+    [Header("Game Phase")]
     public bool changing;
     public float changeTime = 30f;
     public bool Attacking;
     public float attackTime = 60f;
+    public int AttackingPhaseCount;
     public bool Building;
     public float buildingTime = 60f;
+    public int BuildingPhaseCount;
     public int FreeAttackperround;
     [SerializeField] private float Timerunner;
     private enum GamePhase { None, Building, Attacking }
+    private enum SkillPhase {Build , Attack}
     private GamePhase currentPhase;
 
     void Awake()
@@ -65,6 +70,7 @@ public class Gamemanager : MonoBehaviour
     }
     void FixedUpdate(){
         construction = FindObjectsOfType<Construction>();
+        passiveSkill = FindObjectsOfType<PassiveSkill>();
     }
     
 
@@ -143,6 +149,11 @@ public class Gamemanager : MonoBehaviour
 
     public bool StartBuildingPhase()
     {
+        BuildingPhaseCount +=1;
+        UseConstructPerk(SkillPhase.Build);
+        for(int i= 0;i<player.Length;i++){
+            player[i].GainMultiplier =1;
+        }
         Warpto(playerposition);
         //Debug.Log("Setting cardUI to active");
         if (cardUI != null)
@@ -165,13 +176,13 @@ public class Gamemanager : MonoBehaviour
 
     public void StartAttackPhase()
     {
+        AttackingPhaseCount += 1;
+        ResetAnySkill();
         for(int i = 0;i< player.Length; i++){
-            player[i].ResetAttackCount(FreeAttackperround);
-            player[i].Hit = 0;
-            player[i].ShowedLog = false;
+            player[i].ResetAttackCount(0);
         }
         Warpto(attackposition);
-        UseConstructPerk();
+        UseConstructPerk(SkillPhase.Attack);
 
         if (cardUI != null)
         {
@@ -214,9 +225,37 @@ public class Gamemanager : MonoBehaviour
         Playerself.transform.position = position.transform.position;
     }
 
-    public void UseConstructPerk(){
-        for(int i = 0;i< construction.Length; i++){
-            construction[i].OnUse();
+    private void UseConstructPerk(SkillPhase skillPhase){
+        foreach (Construction construction in construction)
+        {
+            switch (skillPhase)
+            {
+                case SkillPhase.Build:
+                    if (construction.preBuild)
+                    {
+                        construction.OnUse();
+                    }
+                    break;
+
+                case SkillPhase.Attack:
+                    if (construction.preAttack)
+                    {
+                        construction.OnUse();
+                    }
+                    break;
+            }
         }
+    }
+    public void ResetAnySkill(){
+            for (int i = 0; i < passiveSkill.Length; i++)
+        {
+            if (passiveSkill[i] != null)
+            {
+                Destroy(passiveSkill[i].gameObject);
+            }
+        }
+
+        // Clean up the array to remove null references
+        passiveSkill = passiveSkill.Where(skill => skill != null).ToArray();
     }
 }

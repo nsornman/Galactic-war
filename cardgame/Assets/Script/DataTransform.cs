@@ -8,8 +8,10 @@ public class DataTransform : MonoBehaviour
     public Contructslot[] CS;
     public Skillslot[] SS;
     public CardItem cardusing;
+    public SkillUse skillUse; 
     public bool Construct,Skill;
     public bool placed = false;
+    public bool Used = false;
 
     void Start()
     {
@@ -21,6 +23,8 @@ public class DataTransform : MonoBehaviour
         GetSelectedSlot();
         GetCardtype();
         CheckPlacing();
+        CheckUsing();
+        CheckSelected();
     }
 
     public void GetSelectedSlot(){
@@ -87,6 +91,26 @@ public class DataTransform : MonoBehaviour
                     return; // Exit the method once the selected card is found
                 }
             }
+        }
+    }
+    public void CheckUsing(){
+        if(HaveSelected() && Used){
+            for (int i = 0; i < SS.Length; i++)
+            {
+                if (SS[i].selected && SS[i].isfull)
+                {
+                    SS[i].Useitem();
+                    Used = false;
+                    return; // Exit the method once the selected card is found
+                }
+            }
+        }
+    }
+    public void CheckSelected(){
+        if(HaveSelected() && cardusing.Type == itemtype.Skillitem){
+            skillUse.gameObject.SetActive(true);
+        }else{
+            skillUse.gameObject.SetActive(false);
         }
     }
 }

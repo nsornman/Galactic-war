@@ -6,8 +6,10 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float attackcount;
-    public float CostMultiplier;
-    public float GainMultiplier;
+    [HideInInspector] public float freeattackfromcard = 0;
+    public int DamageMultiplier = 1;
+    public float CostMultiplier = 1;
+    public float GainMultiplier = 1;
     public int Wood;
     public int Metal;
     public int Concrete;
@@ -45,6 +47,10 @@ public class Player : MonoBehaviour
     }
     public void ResetAttackCount(float attackcount){
         this.attackcount = attackcount;
+        DamageMultiplier = 1;
+        Hit = 0;
+        ShowedLog = false;
+        CostMultiplier = 1;
     }
     public void SetCard(int ConstructCard, int SkillCard){
         inventoryManager.StartCard(ConstructCard , SkillCard);

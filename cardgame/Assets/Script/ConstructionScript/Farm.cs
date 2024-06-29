@@ -13,6 +13,7 @@ public class Farm : Construction
     {
         base.Awake();
         preBuild = true;
+
     }
     public override void OnUse()
     {
