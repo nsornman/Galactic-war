@@ -47,9 +47,6 @@ public class Skillslot : MonoBehaviour , IPointerClickHandler
         if(eventData.button == PointerEventData.InputButton.Left){
             OnLeftClick();
         }
-        if(eventData.button == PointerEventData.InputButton.Right){
-            OnRightClick();
-        }
     }
 
     void OnLeftClick(){
@@ -83,7 +80,7 @@ public class Skillslot : MonoBehaviour , IPointerClickHandler
             Emptyslot();
         }
         if(selected){
-
+            
             selected = false;
             SelectedPanel.SetActive(false);
         }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Gamemanager : MonoBehaviour
@@ -12,7 +13,7 @@ public class Gamemanager : MonoBehaviour
     public int StarterMetal;
     public int StarterConcrete;
     public int StarterStone;
-    public int Attackperround;
+    
     [Header("Assign GameObjects")]
     public GameObject attackposition;
     public GameObject playerposition;
@@ -21,15 +22,21 @@ public class Gamemanager : MonoBehaviour
     public GameObject Playerself;
     [SerializeField] private Player[] player;
     private Clickableblock[] clickableblocks;
-    [Header("For Debug")]
+    [SerializeField] private Construction[] construction;
+    private PassiveSkill[] passiveSkill;
+    [Header("Game Phase")]
     public bool changing;
     public float changeTime = 30f;
     public bool Attacking;
     public float attackTime = 60f;
+    public int AttackingPhaseCount;
     public bool Building;
     public float buildingTime = 60f;
+    public int BuildingPhaseCount;
+    public int FreeAttackperround;
     [SerializeField] private float Timerunner;
     private enum GamePhase { None, Building, Attacking }
+    private enum SkillPhase {Build , Attack}
     private GamePhase currentPhase;
 
     void Awake()
@@ -61,6 +68,11 @@ public class Gamemanager : MonoBehaviour
             CheckPhase();
         }
     }
+    void FixedUpdate(){
+        construction = FindObjectsOfType<Construction>();
+        passiveSkill = FindObjectsOfType<PassiveSkill>();
+    }
+    
 
     public void SetMats()
     {
@@ -137,6 +149,11 @@ public class Gamemanager : MonoBehaviour
 
     public bool StartBuildingPhase()
     {
+        BuildingPhaseCount +=1;
+        UseConstructPerk(SkillPhase.Build);
+        for(int i= 0;i<player.Length;i++){
+            player[i].GainMultiplier =1;
+        }
         Warpto(playerposition);
         //Debug.Log("Setting cardUI to active");
         if (cardUI != null)
@@ -152,35 +169,30 @@ public class Gamemanager : MonoBehaviour
         Building = true;
         Attacking = false;
         currentPhase = GamePhase.Building;
-        Timerunner = 0f;
+        Timerunner = 0f; //Start Counting
         //Debug.Log("Building Phase Started");
         return true;
     }
 
     public void StartAttackPhase()
     {
+        AttackingPhaseCount += 1;
+        ResetAnySkill();
         for(int i = 0;i< player.Length; i++){
-            player[i].ResetAttackCount(Attackperround);
-            player[i].Hit = 0;
-            player[i].ShowedLog = false;
+            player[i].ResetAttackCount(0);
         }
         Warpto(attackposition);
-        //Debug.Log("Setting cardUI to inactive");
+        UseConstructPerk(SkillPhase.Attack);
+
         if (cardUI != null)
         {
-            //Debug.Log("cardUI is not null, deactivating");
             cardUI.SetActive(false);
-        }
-        else
-        {
-            //Debug.Log("cardUI is null, cannot deactivate");
         }
         ChangeUI.SetActive(false);
         Building = false;
         Attacking = true;
         currentPhase = GamePhase.Attacking;
-        Timerunner = 0f;
-        //Debug.Log("Attack Phase Started");
+        Timerunner = 0f; // Start Count
     }
 
     public void EndGame()
@@ -211,5 +223,39 @@ public class Gamemanager : MonoBehaviour
     private void Warpto(GameObject position)
     {
         Playerself.transform.position = position.transform.position;
+    }
+
+    private void UseConstructPerk(SkillPhase skillPhase){
+        foreach (Construction construction in construction)
+        {
+            switch (skillPhase)
+            {
+                case SkillPhase.Build:
+                    if (construction.preBuild)
+                    {
+                        construction.OnUse();
+                    }
+                    break;
+
+                case SkillPhase.Attack:
+                    if (construction.preAttack)
+                    {
+                        construction.OnUse();
+                    }
+                    break;
+            }
+        }
+    }
+    public void ResetAnySkill(){
+            for (int i = 0; i < passiveSkill.Length; i++)
+        {
+            if (passiveSkill[i] != null)
+            {
+                Destroy(passiveSkill[i].gameObject);
+            }
+        }
+
+        // Clean up the array to remove null references
+        passiveSkill = passiveSkill.Where(skill => skill != null).ToArray();
     }
 }

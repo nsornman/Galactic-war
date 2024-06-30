@@ -7,27 +7,31 @@ using UnityEngine;
 public class Clickableblock : MonoBehaviour
 {
     public int HP;
+    public int maxHP;
     public bool hasDestroyed = false;
     public GameObject BuildableBlock;
     public GameObject AttackableBlock;
     [Header("For Debug")]
     public GameObject ModelHolder;
-    public DataTransform carddata;
-    public ConstructionCard constructionCard;
+    [HideInInspector] public DataTransform carddata;
+    [HideInInspector] public ConstructionCard constructionCard;
     private GameObject instantiated;
-    [HideInInspector]public ConstructionCard blockdata;
+    public ConstructionCard blockdata;  //actual real time blockcard data
+    public Player player;
     public bool havemodel = false;
     
     private void Awake()
     {
         carddata = FindObjectOfType<DataTransform>();
+        player = FindObjectOfType<Player>();
     }
     public void Update(){
         CheckDestroyed();
         SetConstruct();
-        if(blockdata != null){
-            this.HP = blockdata.HP; //for testing
-        }
+        // if(this.blockdata != null)
+        // {
+        //     this.blockdata.Model.GetComponent<Construction>().clickableblock = this.GetComponent<Clickableblock>(); 
+        // }
     }
     public void SetConstruct(){
         if(carddata.Construct){
@@ -41,23 +45,35 @@ public class Clickableblock : MonoBehaviour
         if(!hasDestroyed){
             if(constructionCard != null){
                 Vector3 modelPosition = ModelHolder.transform.position;
-                blockdata = constructionCard;
-                if(!havemodel){
-                    blockdata.Use(modelPosition);
-                    instantiated = blockdata.Instantiatemodel;
-                    carddata.placed = true;
-                    havemodel = true;
+                if(CheckMat(player , constructionCard)){
+                        blockdata = constructionCard;
+                    if(!havemodel){
+                        blockdata.Use(modelPosition , this.BuildableBlock.transform);
+                        player.Pay(blockdata.Woodcost,blockdata.Metalcost,blockdata.Concretecost,blockdata.Stonecost);
+                        instantiated = blockdata.Instantiatemodel;
+                        carddata.placed = true;
+                        havemodel = true;
+                        // Set maxHP to blockdata's healthPoint when the model is instantiated
+                        maxHP = blockdata.Model.GetComponent<Construction>().healthPoint;
+                        HP = maxHP; // Initialize current HP to max HP
+                    }
+                }else{
+                    Debug.Log("Material Not Enough!");
                 }
             }
         }
     }
-    public void DecreseHP(int damage){
-        if(HP >= 0) HP-= damage;
-        else Destroyed();
+    public void DecreaseHP(int damage){
+        if(HP >= 0){
+            HP-= damage;
+        }
     }
-    public void IncreaseHP(int HP){
-        this.HP += HP;
+    public void IncreaseHP(int increaseAmount){
+        this.HP += increaseAmount;
+        this.maxHP += increaseAmount;
+        if (HP > maxHP) HP = maxHP;
     }
+
     public void Destroyed(){
         hasDestroyed = true;
     }
@@ -65,7 +81,7 @@ public class Clickableblock : MonoBehaviour
         hasDestroyed = false;
     }
     public void CheckDestroyed(){
-        if(hasDestroyed){
+        if((hasDestroyed || HP <= 0) && maxHP != 0){
             BuildableBlock.SetActive(false);
             this.blockdata = null;
             if(havemodel){
@@ -75,5 +91,13 @@ public class Clickableblock : MonoBehaviour
         }else{
             BuildableBlock.SetActive(true);
         }
+    }
+    public bool CheckMat(Player player, ConstructionCard constructionCard){
+        int MetalLeft = player.Metal - Mathf.RoundToInt(constructionCard.Metalcost * player.CostMultiplier);
+        int ConcreteLeft = player.Concrete - Mathf.RoundToInt(constructionCard.Concretecost * player.CostMultiplier);
+        int StoneLeft = player.Stone - Mathf.RoundToInt(constructionCard.Stonecost * player.CostMultiplier);
+        int WoodLeft = player.Wood - Mathf.RoundToInt(constructionCard.Woodcost * player.CostMultiplier);
+        if(WoodLeft >= 0 && ConcreteLeft>=0 && StoneLeft >= 0 && MetalLeft >= 0) return true;
+        return false;
     }
 }

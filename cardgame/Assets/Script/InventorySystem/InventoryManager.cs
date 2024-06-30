@@ -47,7 +47,7 @@ public class InventoryManager : MonoBehaviour
         for(int i= 0;i< SkillCard;i++){
             AddSkillitem(SC[randomSCindice()]);
         }
-        Debug.Log("HI");
+        //Debug.Log("HI");
     }
     public int randomSCindice(){
         if (SC.Length == 0)
@@ -124,6 +124,16 @@ public class InventoryManager : MonoBehaviour
         for (int i = 0; i < constructslots.Length; i++)
         {
             constructslots[i].Useitem();
+        }
+    }
+    public void addrandomSkill(){
+        AddSkillitem(SC[randomSCindice()]);
+    }
+    public void AddfromRandomArr(bool SkillorConstruct){
+        if(SkillorConstruct){
+            AddSkillitem(SC[randomSCindice()]);
+        }else{
+            AddConstructitem(CC[randomCCindice()]);
         }
     }
 

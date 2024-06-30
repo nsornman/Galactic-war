@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39c94353a664c2a4ea0504376b4e92d4, type: 3}
+  m_Name: MC
+  m_EditorClassIdentifier: 
+  CardName: Military Camp
+  Cardsprite: {fileID: 21300000, guid: 9804c01c23859fb4ab67c2de8816b9fe, type: 3}
+  Description: 
+  Type: 0
+  Levelcap: 3
+  Woodcost: 10
+  Metalcost: 10
+  Concretecost: 0
+  Stonecost: 0
+  Model: {fileID: 5961203566370139781, guid: 933197adb36b64e4ab44471ac9d056d9, type: 3}
+  Instantiatemodel: {fileID: 0}
