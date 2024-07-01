@@ -223,6 +223,7 @@ public class Gamemanager : MonoBehaviour
     private void Warpto(GameObject position)
     {
         Playerself.transform.position = position.transform.position;
+        Playerself.transform.rotation = position.transform.rotation;
     }
 
     private void UseConstructPerk(SkillPhase skillPhase){
