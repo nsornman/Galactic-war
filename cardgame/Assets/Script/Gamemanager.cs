@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class Gamemanager : MonoBehaviour
@@ -38,6 +39,9 @@ public class Gamemanager : MonoBehaviour
     private enum GamePhase { None, Building, Attacking }
     private enum SkillPhase {Build , Attack}
     private GamePhase currentPhase;
+
+     [Header("UI Elements")]
+    public TMP_Text timerText; 
 
     void Awake()
     {
@@ -259,4 +263,19 @@ public class Gamemanager : MonoBehaviour
         // Clean up the array to remove null references
         passiveSkill = passiveSkill.Where(skill => skill != null).ToArray();
     }
+    private void UpdateTimerUI()
+{
+    if (timerText != null)
+    {
+        if (currentPhase == GamePhase.Building)
+        {
+            timerText.text = Mathf.CeilToInt(buildingTime - Timerunner).ToString();
+        }
+        else if (currentPhase == GamePhase.Attacking)
+        {
+            timerText.text = Mathf.CeilToInt(attackTime - Timerunner).ToString();
+        }
+    }
+}
+
 }
