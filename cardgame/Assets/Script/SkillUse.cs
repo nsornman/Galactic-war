@@ -8,9 +8,6 @@ public class SkillUse : MonoBehaviour
     [Header("Self-Assignable")]
     public DataTransform carddata;
     public SkillCard skillCard;
-    public void Awake(){
-        carddata = FindObjectOfType<DataTransform>();
-    }
 
     public void Update()
     {

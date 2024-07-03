@@ -14,8 +14,8 @@ public class DataTransform : MonoBehaviour
 
     void Start()
     {
-        SS = FindObjectsOfType<Skillslot>();
-        CS = FindObjectsOfType<Contructslot>();
+        // SS = FindObjectsOfType<Skillslot>();
+        // CS = FindObjectsOfType<Contructslot>();
     }
     void Update()
     {

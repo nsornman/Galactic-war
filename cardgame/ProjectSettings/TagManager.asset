@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - changeUI
+  - PlayerPos
+  - AttackPos
+  - CardUI
   layers:
   - Default
   - TransparentFX

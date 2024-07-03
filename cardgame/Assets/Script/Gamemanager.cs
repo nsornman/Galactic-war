@@ -22,7 +22,8 @@ public class Gamemanager : MonoBehaviour
     public GameObject[] playerposition;
     public string changeUITag;
     [HideInInspector] public GameObject[] changeUI;
-    public GameObject cardUI;
+    public string CardUITag;
+    public GameObject[] cardUI;
     public Camera[] Playercam;
     [SerializeField] private Player[] player;
     private Clickableblock[] clickableblocks;
@@ -39,16 +40,22 @@ public class Gamemanager : MonoBehaviour
     public int BuildingPhaseCount;
     public int FreeAttackperround;
     [SerializeField] private float Timerunner;
-    private enum GamePhase { None, Building, Attacking }
+    private enum GamePhase {None, Building, Attacking}
     private enum SkillPhase {Build , Attack}
     private GamePhase currentPhase;
 
-    void Awake()
+    void FixedUpdate()
     {
         clickableblocks = FindObjectsOfType<Clickableblock>();
         player = FindObjectsOfType<Player>();
         Playercam = FindObjectsOfType<Camera>();
         changeUI = GameObject.FindGameObjectsWithTag(changeUITag);
+        cardUI = GameObject.FindGameObjectsWithTag(CardUITag);
+        playerposition = GameObject.FindGameObjectsWithTag(playerPosTag); //need player position after all prefab are spawning
+        attackposition = GameObject.FindGameObjectsWithTag(attackPosTag); //need attack Pos to shuffle between 2 player
+        construction = FindObjectsOfType<Construction>();
+        passiveSkill = FindObjectsOfType<PassiveSkill>();
+
     }
 
     void Start()
@@ -60,7 +67,8 @@ public class Gamemanager : MonoBehaviour
     //     SetNewLives();
     // }
     IEnumerator Waitfor(){
-        yield return new WaitUntil(StartBuildingPhase);
+        yield return new WaitUntil(Waitfor2ndPlayer);
+        StartBuildingPhase();
         SetNewLives();
     }
 
@@ -74,14 +82,11 @@ public class Gamemanager : MonoBehaviour
             CheckPhase();
         }
     }
-    void FixedUpdate(){
-        construction = FindObjectsOfType<Construction>();
-        passiveSkill = FindObjectsOfType<PassiveSkill>();
-        playerposition = GameObject.FindGameObjectsWithTag(playerPosTag); //need player position after all prefab are spawning
-        attackposition = GameObject.FindGameObjectsWithTag(attackPosTag); //need attack Pos to shuffle between 2 player
-
+    public bool Waitfor2ndPlayer(){
+        if(Playercam.Length> 1 && Playercam[1] != null){
+            return true;
+        }return false;
     }
-    
 
     public void SetMats()
     {
@@ -170,7 +175,9 @@ public class Gamemanager : MonoBehaviour
         if (cardUI != null)
         {
             //Debug.Log("cardUI is not null, activating");
-            cardUI.SetActive(true);
+            for(int i = 0;i< cardUI.Length;i++){
+                cardUI[i].SetActive(true);
+            }
         }
         else
         {
@@ -186,13 +193,24 @@ public class Gamemanager : MonoBehaviour
         //Debug.Log("Building Phase Started");
         return true;
     }
-
+    private void SwapAttackPositions()
+    {
+        if (attackposition.Length >= 2)
+        {
+            GameObject temp = attackposition[0];
+            attackposition[0] = attackposition[1];
+            attackposition[1] = temp;
+        }
+    }
     public void StartAttackPhase()
     {
         AttackingPhaseCount += 1;
         ResetAnySkill();
         for(int i = 0;i< player.Length; i++){
             player[i].ResetAttackCount(0);
+        }
+        if(AttackingPhaseCount <= 1){
+            SwapAttackPositions();
         }
         for(int i = 0;i< Playercam.Length ; i++){ //Not Supporting Enemy multiple attack position / shuffing attack pos
             Warpto(i , attackposition[i]);
@@ -201,7 +219,9 @@ public class Gamemanager : MonoBehaviour
 
         if (cardUI != null)
         {
-            cardUI.SetActive(false);
+            for(int i = 0 ;i< cardUI.Length;i++){
+                cardUI[i].SetActive(false);
+            }
         }
         for(int j = 0;j< changeUI.Length ;j++){
             changeUI[j].SetActive(false);
