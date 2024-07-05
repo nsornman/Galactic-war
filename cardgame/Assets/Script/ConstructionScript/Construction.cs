@@ -24,9 +24,13 @@ public abstract class Construction : MonoBehaviour
             Transform Grandparent = parent.parent;
             if(Grandparent != null){
                 clickableblock = Grandparent.GetComponent<Clickableblock>();
+                Transform grandGrandParent =Grandparent.parent;
+                if(grandGrandParent != null){
+                    Transform grandGrandGrandParent = grandGrandParent. parent;
+                    player = grandGrandGrandParent.GetComponentInParent<Player>();
+                }
             }
         }
-        player = FindObjectOfType<Player>();
         Levelcap = clickableblock.blockdata.Levelcap;
     }
     public void Onleveling(){

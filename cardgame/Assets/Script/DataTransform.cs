@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Palmmedia.ReportGenerator.Core.Reporting.Builders;
 using UnityEngine;
 
 public class DataTransform : MonoBehaviour
@@ -15,8 +14,8 @@ public class DataTransform : MonoBehaviour
 
     void Start()
     {
-        SS = FindObjectsOfType<Skillslot>();
-        CS = FindObjectsOfType<Contructslot>();
+        // SS = FindObjectsOfType<Skillslot>();
+        // CS = FindObjectsOfType<Contructslot>();
     }
     void Update()
     {

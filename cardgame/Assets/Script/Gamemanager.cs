@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using UnityEngine;
 
 public class Gamemanager : MonoBehaviour
@@ -15,11 +16,15 @@ public class Gamemanager : MonoBehaviour
     public int StarterStone;
     
     [Header("Assign GameObjects")]
-    public GameObject attackposition;
-    public GameObject playerposition;
-    public GameObject ChangeUI;
-    public GameObject cardUI;
-    public GameObject Playerself;
+    public string attackPosTag;
+    public GameObject[] attackposition;
+    public string playerPosTag;
+    public GameObject[] playerposition;
+    public string changeUITag;
+    [HideInInspector] public GameObject[] changeUI;
+    public string CardUITag;
+    public GameObject[] cardUI;
+    public Camera[] Playercam;
     [SerializeField] private Player[] player;
     private Clickableblock[] clickableblocks;
     [SerializeField] private Construction[] construction;
@@ -34,15 +39,23 @@ public class Gamemanager : MonoBehaviour
     public float buildingTime = 60f;
     public int BuildingPhaseCount;
     public int FreeAttackperround;
-    [SerializeField] private float Timerunner;
-    private enum GamePhase { None, Building, Attacking }
+    public float Timerunner;
+    public enum GamePhase {None, Building, Attacking}
     private enum SkillPhase {Build , Attack}
-    private GamePhase currentPhase;
+    public GamePhase currentPhase;
 
-    void Awake()
+    void FixedUpdate()
     {
         clickableblocks = FindObjectsOfType<Clickableblock>();
         player = FindObjectsOfType<Player>();
+        Playercam = FindObjectsOfType<Camera>();
+        changeUI = GameObject.FindGameObjectsWithTag(changeUITag);
+        cardUI = GameObject.FindGameObjectsWithTag(CardUITag);
+        playerposition = GameObject.FindGameObjectsWithTag(playerPosTag); //need player position after all prefab are spawning
+        attackposition = GameObject.FindGameObjectsWithTag(attackPosTag); //need attack Pos to shuffle between 2 player
+        construction = FindObjectsOfType<Construction>();
+        passiveSkill = FindObjectsOfType<PassiveSkill>();
+
     }
 
     void Start()
@@ -54,7 +67,8 @@ public class Gamemanager : MonoBehaviour
     //     SetNewLives();
     // }
     IEnumerator Waitfor(){
-        yield return new WaitUntil(StartBuildingPhase);
+        yield return new WaitUntil(Waitfor2ndPlayer);
+        StartBuildingPhase();
         SetNewLives();
     }
 
@@ -68,11 +82,11 @@ public class Gamemanager : MonoBehaviour
             CheckPhase();
         }
     }
-    void FixedUpdate(){
-        construction = FindObjectsOfType<Construction>();
-        passiveSkill = FindObjectsOfType<PassiveSkill>();
+    public bool Waitfor2ndPlayer(){
+        if(Playercam.Length> 1 && Playercam[1] != null){
+            return true;
+        }return false;
     }
-    
 
     public void SetMats()
     {
@@ -154,18 +168,24 @@ public class Gamemanager : MonoBehaviour
         for(int i= 0;i<player.Length;i++){
             player[i].GainMultiplier =1;
         }
-        Warpto(playerposition);
+        for(int i = 0;i< Playercam.Length;i++){ //Not Supporting Own player building position
+            Warpto(i , playerposition[i]);
+        }
         //Debug.Log("Setting cardUI to active");
         if (cardUI != null)
         {
             //Debug.Log("cardUI is not null, activating");
-            cardUI.SetActive(true);
+            for(int i = 0;i< cardUI.Length;i++){
+                cardUI[i].SetActive(true);
+            }
         }
         else
         {
             //Debug.Log("cardUI is null, cannot activate");
         }
-        ChangeUI.SetActive(false);
+        for(int j = 0;j< changeUI.Length ;j++){
+            changeUI[j].SetActive(false);
+        }
         Building = true;
         Attacking = false;
         currentPhase = GamePhase.Building;
@@ -173,7 +193,15 @@ public class Gamemanager : MonoBehaviour
         //Debug.Log("Building Phase Started");
         return true;
     }
-
+    private void SwapAttackPositions()
+    {
+        if (attackposition.Length >= 2)
+        {
+            GameObject temp = attackposition[0];
+            attackposition[0] = attackposition[1];
+            attackposition[1] = temp;
+        }
+    }
     public void StartAttackPhase()
     {
         AttackingPhaseCount += 1;
@@ -181,14 +209,23 @@ public class Gamemanager : MonoBehaviour
         for(int i = 0;i< player.Length; i++){
             player[i].ResetAttackCount(0);
         }
-        Warpto(attackposition);
+        if(AttackingPhaseCount <= 1){
+            SwapAttackPositions();
+        }
+        for(int i = 0;i< Playercam.Length ; i++){ //Not Supporting Enemy multiple attack position / shuffing attack pos
+            Warpto(i , attackposition[i]);
+        }
         UseConstructPerk(SkillPhase.Attack);
 
         if (cardUI != null)
         {
-            cardUI.SetActive(false);
+            for(int i = 0 ;i< cardUI.Length;i++){
+                cardUI[i].SetActive(false);
+            }
         }
-        ChangeUI.SetActive(false);
+        for(int j = 0;j< changeUI.Length ;j++){
+            changeUI[j].SetActive(false);
+        }
         Building = false;
         Attacking = true;
         currentPhase = GamePhase.Attacking;
@@ -205,7 +242,9 @@ public class Gamemanager : MonoBehaviour
     {
         changing = true;
         //Debug.Log("Waiting for change time...");
-        ChangeUI.SetActive(true);
+        for(int j = 0;j< changeUI.Length ;j++){
+            changeUI[j].SetActive(true);
+        }
         yield return new WaitForSeconds(changeTime);
         //Debug.Log("Change time elapsed. Changing phase.");
         changing = false;
@@ -220,9 +259,10 @@ public class Gamemanager : MonoBehaviour
         }
     }
 
-    private void Warpto(GameObject position)
+    private void Warpto(int index,GameObject position)
     {
-        Playerself.transform.position = position.transform.position;
+        Playercam[index].transform.position = position.transform.position;
+        Playercam[index].transform.rotation = position.transform.rotation;
     }
 
     private void UseConstructPerk(SkillPhase skillPhase){

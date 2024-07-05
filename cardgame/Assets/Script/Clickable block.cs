@@ -22,8 +22,18 @@ public class Clickableblock : MonoBehaviour
     
     private void Awake()
     {
-        carddata = FindObjectOfType<DataTransform>();
-        player = FindObjectOfType<Player>();
+        Transform parent = transform.parent;
+        if(parent != null){
+            Transform Grandparent = parent.parent;
+            if(Grandparent != null){
+                carddata = Grandparent.GetComponent<DataTransform>();
+                Transform GrandgrandParent = Grandparent.parent;
+                if(GrandgrandParent!= null){
+                    player = GrandgrandParent.GetComponent<Player>();
+                }
+            }
+
+        }
     }
     public void Update(){
         CheckDestroyed();
