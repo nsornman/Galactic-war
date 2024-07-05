@@ -8,7 +8,7 @@ public class ResourceDisplay : MonoBehaviour
     [SerializeField] public TextMeshProUGUI resourceText;
     public Gamemanager gameManager; // Reference to GameManager script
 
-    void Start()
+    void Awake()
     {
         gameManager = FindObjectOfType<Gamemanager>();
         if (resourceText == null)
