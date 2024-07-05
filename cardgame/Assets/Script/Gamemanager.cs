@@ -39,10 +39,10 @@ public class Gamemanager : MonoBehaviour
     public float buildingTime = 60f;
     public int BuildingPhaseCount;
     public int FreeAttackperround;
-    [SerializeField] private float Timerunner;
-    private enum GamePhase {None, Building, Attacking}
+    public float Timerunner;
+    public enum GamePhase {None, Building, Attacking}
     private enum SkillPhase {Build , Attack}
-    private GamePhase currentPhase;
+    public GamePhase currentPhase;
 
     void FixedUpdate()
     {

@@ -2,22 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class Timer : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI timerText;
-    float countdownTime = 60f;
+    public Gamemanager gameManager;
 
+    void Awake(){
+        gameManager = FindObjectOfType<Gamemanager>();
+    }
     void Update()
     {
-        if (countdownTime > 0)
-        {
-            countdownTime -= Time.deltaTime;
-            timerText.text = Mathf.Ceil(countdownTime).ToString(); // Display countdown with no decimal places
-        }
-        else
-        {
-            timerText.text = "0"; // Display 0 when countdown reaches 0
+        switch(gameManager.currentPhase){
+            case Gamemanager.GamePhase.Building:
+                if(gameManager.Timerunner <= gameManager.buildingTime){
+                    timerText.text = (gameManager.buildingTime - gameManager.Timerunner).ToString();
+                }else{
+                    timerText.text = "0";
+                }
+                break;
+            case Gamemanager.GamePhase.Attacking:
+                if(gameManager.Timerunner <= gameManager.attackTime){
+                    timerText.text = (gameManager.attackTime - gameManager.Timerunner).ToString();
+                }else{
+                    timerText.text = "0";
+                }
+                break;
         }
     }
 }
