@@ -6,12 +6,11 @@ using TMPro;
 public class ResourceDisplay : MonoBehaviour
 {
     [SerializeField] public TextMeshProUGUI resourceText;
-    public GameManager gameManager; // Reference to GameManager script
+    public Gamemanager gameManager; // Reference to GameManager script
 
     void Start()
     {
-        gameManager = GameManager.Instance; // Ensure GameManager.Instance is correctly implemented
-
+        gameManager = FindObjectOfType<Gamemanager>();
         if (resourceText == null)
         {
             Debug.LogError("TMP Text component not assigned to ResourceDisplay script!");
