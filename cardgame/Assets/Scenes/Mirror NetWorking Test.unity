@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028346, g: 0.22571373, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 783010871}
   - component: {fileID: 783010873}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Resources
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -342,7 +342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4511f49e0cd4b54583c3a35853cb2fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceText: {fileID: 0}
+  resourceText: {fileID: 783010871}
   gameManager: {fileID: 0}
 --- !u!114 &1078375138
 MonoBehaviour:
