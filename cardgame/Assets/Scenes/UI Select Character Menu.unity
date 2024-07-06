@@ -385,6 +385,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 337616611091371651, guid: 7ff25a406b86157449d0bf2811fe7de2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.00006614493
+      objectReference: {fileID: 0}
+    - target: {fileID: 1993332535101890361, guid: 7ff25a406b86157449d0bf2811fe7de2, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 5ad20fc80c28d224b9e3725c0786750d, type: 3}
     - target: {fileID: 5084953219626907311, guid: 7ff25a406b86157449d0bf2811fe7de2, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -465,10 +473,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7208766594081277962, guid: 7ff25a406b86157449d0bf2811fe7de2, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7ee9a96b9d2cddb40909d0da457c5367, type: 3}
+    - target: {fileID: 7311406007822546223, guid: 7ff25a406b86157449d0bf2811fe7de2, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 6ca39b4be6a978247ae2f9814cc067b9, type: 3}
+    - target: {fileID: 7387323038425655876, guid: 7ff25a406b86157449d0bf2811fe7de2, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 5d68bd8b9908e0b4f92604449906c959, type: 3}
     - target: {fileID: 7577729660346077448, guid: 7ff25a406b86157449d0bf2811fe7de2, type: 3}
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 8182752725905453215, guid: 7ff25a406b86157449d0bf2811fe7de2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.000030518
+      objectReference: {fileID: 0}
+    - target: {fileID: 8884220620716571199, guid: 7ff25a406b86157449d0bf2811fe7de2, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 19e29b29121097b46a60a44131c757d6, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
