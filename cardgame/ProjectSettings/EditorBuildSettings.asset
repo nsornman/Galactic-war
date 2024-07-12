@@ -5,25 +5,22 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/LearnNSC/UI Teach.unity
-    guid: d7e843db6e9f4dd499747e626608458d
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/UI MainMenu.unity
     guid: 7a24719b9f34e4b4388dbb396c88e18a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/UI ModeMenu.unity
     guid: b92f6dacec02f834383b598dd0da1e1b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/UI Select Character Menu.unity
     guid: 6e363cd4735a34842bf1e309613d1fad
-  - enabled: 1
-    path: Assets/Scenes/Time Scene.unity
-    guid: d8032f7a71cd9e048a1dfe62017028b1
-  - enabled: 1
-    path: Assets/Scenes/Mirror NetWorking Test.unity
-    guid: 98731c45ef5a1dc4abbafd5482c5eed6
-  - enabled: 1
-    path: Assets/Scenes/Multi Script.unity
+  - enabled: 0
+    path: Assets/Scenes/PlayScene.unity
     guid: 6f217e00dcf19cc40981a7884cc808f4
+  - enabled: 1
+    path: Assets/Scenes/UI Networking.unity
+    guid: d7403069388e7e54985f4bd32e58b541
+  - enabled: 1
+    path: Assets/Scenes/PlaytestScene.unity
+    guid: 64dae75eca2e9074295cf89e5a3a3a6a
   m_configObjects: {}
