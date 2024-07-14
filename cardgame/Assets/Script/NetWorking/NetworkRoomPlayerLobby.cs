@@ -57,12 +57,11 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
     }
     public void HandleReadyStatusChanged(bool oldValue, bool newValue) => UpdateDisplay();
     public void HandleDisplayNameChanged(string oldValue, string newValue) => UpdateDisplay();
-
     private void UpdateDisplay(){
-        if(!authority){
+        if(!isOwned){
             foreach (var player in Room.RoomPlayers)
             {
-                if(player.authority){
+                if(player.isOwned){
                     player.UpdateDisplay();
                     break;
                 }

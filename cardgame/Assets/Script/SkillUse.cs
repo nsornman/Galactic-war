@@ -15,11 +15,14 @@ public class SkillUse : MonoBehaviour
     }
 
     public void SetSkill(){
-        if(carddata.Skill){
+        if (!carddata.Skill)
+        {
+            skillCard = null;
+        }
+        else
+        {
             //Debug.Log("holding construction card");
             skillCard = carddata.cardusing as SkillCard;
-        }else{
-            skillCard = null;
         }
     }
 

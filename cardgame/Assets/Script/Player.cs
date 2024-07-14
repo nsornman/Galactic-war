@@ -1,22 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : /*NetworkBehaviour*/MonoBehaviour
 {
     public float attackcount;
     [HideInInspector] public float freeattackfromcard = 0;
-    public int DamageMultiplier = 1;
-    public float CostMultiplier = 1;
-    public float GainMultiplier = 1;
-    public int Wood;
-    public int Metal;
-    public int Concrete;
-    public int Stone;
+    /*[SyncVar]*/ public int DamageMultiplier = 1;
+    /*[SyncVar]*/public float CostMultiplier = 1;
+    /*[SyncVar]*/public float GainMultiplier = 1;
+    /*[SyncVar]*/public int Wood;
+    /*[SyncVar]*/public int Metal;
+    /*[SyncVar]*/public int Concrete;
+    /*[SyncVar]*/public int Stone;
     public InventoryManager inventoryManager;
     [HideInInspector]public int Hit = 0;
     [HideInInspector] public bool ShowedLog;
-
 
     public void Update(){
         if(attackcount <= 0 && !ShowedLog){

@@ -1,54 +1,61 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Clickableblock : MonoBehaviour
+public class Clickableblock : MonoBehaviour//NetworkBehaviour
 {
-    public int HP;
-    public int maxHP;
-    public bool hasDestroyed = false;
+    /*[SyncVar]*/ public int HP;
+    /*[SyncVar]*/ public int maxHP;
+    /*[SyncVar]*/ public bool hasDestroyed = false;
     public GameObject BuildableBlock;
-    public GameObject AttackableBlock;
+    //public GameObject AttackableBlock;
     [Header("For Debug")]
     public GameObject ModelHolder;
-    [HideInInspector] public DataTransform carddata;
+    public DataTransform carddata;
     [HideInInspector] public ConstructionCard constructionCard;
     private GameObject instantiated;
     public ConstructionCard blockdata;  //actual real time blockcard data
     public Player player;
     public bool havemodel = false;
-    
     private void Awake()
     {
-        Transform parent = transform.parent;
+        Transform parent = this.transform.parent;
         if(parent != null){
             Transform Grandparent = parent.parent;
             if(Grandparent != null){
-                carddata = Grandparent.GetComponent<DataTransform>();
                 Transform GrandgrandParent = Grandparent.parent;
                 if(GrandgrandParent!= null){
                     player = GrandgrandParent.GetComponent<Player>();
-                }
+                    carddata = GrandgrandParent.GetComponent<DataTransform>();
+                }Debug.Log("GrandgrandParent = null");
+            }else{
+                Debug.Log("GrandParen = null");
             }
-
+        }else{
+            Debug.Log("parent = null");
         }
     }
+
     public void Update(){
         CheckDestroyed();
         SetConstruct();
         // if(this.blockdata != null)
         // {
-        //     this.blockdata.Model.GetComponent<Construction>().clickableblock = this.GetComponent<Clickableblock>(); 
+        //     this.blockdata.Model.GetComponent<Construction>().clickableblock = this.GetComponent<Clickableblock>();
         // }
     }
     public void SetConstruct(){
-        if(carddata.Construct){
+        if (!carddata.Construct)
+        {
+            constructionCard = null;
+        }
+        else
+        {
             //Debug.Log("holding construction card");
             constructionCard = carddata.cardusing as ConstructionCard;
-        }else{
-            constructionCard = null;
         }
     }
     private void OnMouseDown(){
@@ -58,7 +65,7 @@ public class Clickableblock : MonoBehaviour
                 if(CheckMat(player , constructionCard)){
                         blockdata = constructionCard;
                     if(!havemodel){
-                        blockdata.Use(modelPosition , this.BuildableBlock.transform);
+                        blockdata.Use(modelPosition , this.BuildableBlock.gameObject.transform);
                         player.Pay(blockdata.Woodcost,blockdata.Metalcost,blockdata.Concretecost,blockdata.Stonecost);
                         instantiated = blockdata.Instantiatemodel;
                         carddata.placed = true;
@@ -91,15 +98,15 @@ public class Clickableblock : MonoBehaviour
         hasDestroyed = false;
     }
     public void CheckDestroyed(){
-        if((hasDestroyed || HP <= 0) && maxHP != 0){
-            BuildableBlock.SetActive(false);
+        if((this.hasDestroyed || this.HP <= 0) && this.maxHP != 0){
+            BuildableBlock.gameObject.SetActive(false);
             this.blockdata = null;
             if(havemodel){
                 Destroy(instantiated);
                 havemodel = false;
             }
         }else{
-            BuildableBlock.SetActive(true);
+            BuildableBlock.gameObject.SetActive(true);
         }
     }
     public bool CheckMat(Player player, ConstructionCard constructionCard){

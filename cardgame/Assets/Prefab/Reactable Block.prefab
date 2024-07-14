@@ -80,16 +80,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1af6a19d4db20cf4ebce2f067f168bab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   HP: 0
   maxHP: 0
-  HPDifference: 0
   hasDestroyed: 0
   BuildableBlock: {fileID: 3422841900750079816}
-  AttackableBlock: {fileID: 7188132131737977452}
   ModelHolder: {fileID: 8003582429740861005}
   carddata: {fileID: 0}
   constructionCard: {fileID: 0}
   blockdata: {fileID: 0}
+  player: {fileID: 0}
   havemodel: 0
 --- !u!65 &1218799379102541717
 BoxCollider:
@@ -230,8 +232,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7ca9fd7089019c4db1aa6b19f2076c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   DamageDealt: 1
-  motherBlock: {fileID: 3422841900750079816}
   dataContainer: {fileID: 5817358459520281040}
   Break: {r: 1, g: 0, b: 0, a: 1}
   Marked: {r: 1, g: 0.93064964, b: 0.4669811, a: 1}
