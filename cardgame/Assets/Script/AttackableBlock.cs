@@ -1,23 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
 public class AttackableBlock : MonoBehaviour
 {
     public int DamageDealt = 1;
-    public GameObject motherBlock;
-    public Clickableblock dataContainer;
+    //public GameObject motherBlock;
+    /*[SyncVar]*/ public Clickableblock dataContainer;
     public Color Break;
     public Color Marked;
-    public bool Clicked;
-    private Player Enemyplayer;
+    /*[SyncVar]*/ public bool Clicked;
+    [SerializeField]private Player enemyPlayer;
+    private Player[] allPlayer;
 
     public void Awake()
     {
-        Enemyplayer = FindObjectOfType<Player>();
+        allPlayer = FindObjectsOfType<Player>();
+        // for(int i = 0;i< allPlayer.Length ; i++){
+        //     if(!allPlayer[i].isOwned){return;}
+        //     enemyPlayer = allPlayer[i];
+        // }
+        dataContainer = GetComponentInParent<Clickableblock>();
     }
     void OnMouseDown(){ //ClickTime logic goes here
-        if(!Clicked && Enemyplayer.attackcount != 0){
+        if(!Clicked && enemyPlayer.attackcount != 0){
             CheckType();
         }
     }
@@ -34,12 +41,12 @@ public class AttackableBlock : MonoBehaviour
     void AttackNotHit(){
         SetColor(Marked);
         Clicked = true;
-        Enemyplayer.attackcount -= 1;
+        enemyPlayer.attackcount -= 1;
         Debug.Log("Not Hit Anything");
     }
     void AttackHit()
     {
-        dataContainer.DecreaseHP(DamageDealt * Enemyplayer.DamageMultiplier);
+        dataContainer.DecreaseHP(DamageDealt * enemyPlayer.DamageMultiplier);
         if(dataContainer.HP <= 0){
             SetColor(Break);
             Debug.Log("Hit but NotDestroyed");
@@ -48,8 +55,8 @@ public class AttackableBlock : MonoBehaviour
             Debug.Log("Hit and Destroyed");
         }
         Clicked = true;
-        Enemyplayer.attackcount -= 1;
-        Enemyplayer.Hit += 1;
+        enemyPlayer.attackcount -= 1;
+        enemyPlayer.Hit += 1;
     }
     void SetColor(Color color){
         // Create a new MaterialPropertyBlock

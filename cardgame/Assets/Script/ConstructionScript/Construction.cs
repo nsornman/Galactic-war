@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
-public abstract class Construction : MonoBehaviour
+public abstract class Construction : MonoBehaviour//NetworkBehaviour
 {
     [Header("Need to Assign")]
     public int healthPoint;
@@ -13,7 +14,7 @@ public abstract class Construction : MonoBehaviour
     public bool preBuild;
     
     public Clickableblock clickableblock;
-    [SerializeField] protected Player player;
+    /*[SyncVar]*/[SerializeField] protected Player player;
     [Header("Assign in carditem")]
     public int Levelcap;
     public abstract void OnUse();

@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
+using Mirror;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Gamemanager : MonoBehaviour
+public class Gamemanager : /*NetworkBehaviour*/MonoBehaviour
 {
     
     [Header("Assign Games Variable")]
@@ -21,9 +23,9 @@ public class Gamemanager : MonoBehaviour
     public string playerPosTag;
     public GameObject[] playerposition;
     public string changeUITag;
-    [HideInInspector] public GameObject[] changeUI;
+    public ChangeUI[] changeUI;
     public string CardUITag;
-    public GameObject[] cardUI;
+    public InventoryManager[] cardUI;
     public Camera[] Playercam;
     [SerializeField] private Player[] player;
     private Clickableblock[] clickableblocks;
@@ -31,7 +33,7 @@ public class Gamemanager : MonoBehaviour
     private PassiveSkill[] passiveSkill;
     [Header("Game Phase")]
     public bool changing;
-    public float changeTime = 30f;
+    public float changeTime = 10f;
     public bool Attacking;
     public float attackTime = 60f;
     public int AttackingPhaseCount;
@@ -39,25 +41,21 @@ public class Gamemanager : MonoBehaviour
     public float buildingTime = 60f;
     public int BuildingPhaseCount;
     public int FreeAttackperround;
-    public float Timerunner;
+    /*[SyncVar]*/public float Timerunner;
     public enum GamePhase {None, Building, Attacking}
     private enum SkillPhase {Build , Attack}
-    public GamePhase currentPhase;
+    /*[SyncVar]*/ public GamePhase currentPhase;
 
     void FixedUpdate()
     {
         clickableblocks = FindObjectsOfType<Clickableblock>();
         player = FindObjectsOfType<Player>();
         Playercam = FindObjectsOfType<Camera>();
-        changeUI = GameObject.FindGameObjectsWithTag(changeUITag);
-        cardUI = GameObject.FindGameObjectsWithTag(CardUITag);
         playerposition = GameObject.FindGameObjectsWithTag(playerPosTag); //need player position after all prefab are spawning
         attackposition = GameObject.FindGameObjectsWithTag(attackPosTag); //need attack Pos to shuffle between 2 player
         construction = FindObjectsOfType<Construction>();
         passiveSkill = FindObjectsOfType<PassiveSkill>();
-
     }
-
     void Start()
     {
         StartCoroutine(Waitfor());
@@ -68,6 +66,12 @@ public class Gamemanager : MonoBehaviour
     // }
     IEnumerator Waitfor(){
         yield return new WaitUntil(Waitfor2ndPlayer);
+        changeUI = FindObjectsOfType<ChangeUI>();
+        cardUI = FindObjectsOfType<InventoryManager>();
+        foreach (var item in changeUI)
+        {
+            item.gameObject.SetActive(false);
+        }
         StartBuildingPhase();
         SetNewLives();
     }
@@ -176,7 +180,7 @@ public class Gamemanager : MonoBehaviour
         {
             //Debug.Log("cardUI is not null, activating");
             for(int i = 0;i< cardUI.Length;i++){
-                cardUI[i].SetActive(true);
+                cardUI[i].gameObject.SetActive(true);
             }
         }
         else
@@ -184,7 +188,7 @@ public class Gamemanager : MonoBehaviour
             //Debug.Log("cardUI is null, cannot activate");
         }
         for(int j = 0;j< changeUI.Length ;j++){
-            changeUI[j].SetActive(false);
+            changeUI[j].gameObject.SetActive(false);
         }
         Building = true;
         Attacking = false;
@@ -220,11 +224,11 @@ public class Gamemanager : MonoBehaviour
         if (cardUI != null)
         {
             for(int i = 0 ;i< cardUI.Length;i++){
-                cardUI[i].SetActive(false);
+                cardUI[i].gameObject.SetActive(false);
             }
         }
         for(int j = 0;j< changeUI.Length ;j++){
-            changeUI[j].SetActive(false);
+            changeUI[j].gameObject.SetActive(false);
         }
         Building = false;
         Attacking = true;
@@ -243,7 +247,7 @@ public class Gamemanager : MonoBehaviour
         changing = true;
         //Debug.Log("Waiting for change time...");
         for(int j = 0;j< changeUI.Length ;j++){
-            changeUI[j].SetActive(true);
+            changeUI[j].gameObject.SetActive(true);
         }
         yield return new WaitForSeconds(changeTime);
         //Debug.Log("Change time elapsed. Changing phase.");
