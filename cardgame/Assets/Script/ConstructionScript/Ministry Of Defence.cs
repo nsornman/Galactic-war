@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class MinistryOfDefence : Construction
 {
+    public override void Awake()
+    {
+        base.Awake();
+        if(!fromB)
+        popUpScript.AddToQueue("Military of Defence Builded");
+    }
     public override void OnUse()
     {
         switch (level)

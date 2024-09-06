@@ -23,11 +23,11 @@ public class Skillslot : MonoBehaviour , IPointerClickHandler
     public GameObject SelectedPanel;
     public bool selected = false;
 
-    private InventoryManager IM;
+    [SerializeField]private InventoryManager IM;
 
     void Start()
     {
-        IM = FindObjectOfType<InventoryManager>();
+        IM = GetComponentInParent<InventoryManager>();
     }
     public void Additem(string name, Sprite cardsprite, CardItem card){
         this.itemname = name;
@@ -50,19 +50,21 @@ public class Skillslot : MonoBehaviour , IPointerClickHandler
     }
 
     void OnLeftClick(){
-        if (selected)
-        {
-            // Deselect this slot
-            selected = false;
-            SelectedPanel.SetActive(false);
-        }
-        else
-        {
-            // Deselect all other slots
-            IM.DeselectedAllSlot();
-            // Select this slot
-            selected = true;
-            SelectedPanel.SetActive(true);
+        if(isfull){
+            if (selected)
+            {
+                // Deselect this slot
+                selected = false;
+                SelectedPanel.SetActive(false);
+            }
+            else
+            {
+                // Deselect all other slots
+                IM.DeselectedAllSlot();
+                // Select this slot
+                selected = true;
+                SelectedPanel.SetActive(true);
+            }
         }
     }
 

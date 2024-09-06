@@ -13,7 +13,8 @@ public class Farm : Construction
     {
         base.Awake();
         preBuild = true;
-
+        if(!fromB)
+        popUpScript.AddToQueue("Farm Builded");
     }
     public override void OnUse()
     {

@@ -5,10 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/UI MainMenu.unity
     guid: 7a24719b9f34e4b4388dbb396c88e18a
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/UI ModeMenu.unity
     guid: b92f6dacec02f834383b598dd0da1e1b
   - enabled: 0
@@ -23,7 +23,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/PlaytestScene.unity
     guid: 64dae75eca2e9074295cf89e5a3a3a6a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Demo scene.unity
     guid: 26db9f68003f9c740a3a0fa8859448ee
+  - enabled: 1
+    path: Assets/Scenes/APerspective.unity
+    guid: defdfd6e219751c4793053db90d88425
+  - enabled: 0
+    path: Assets/Scenes/BPerspective.unity
+    guid: 2b01f766d055f4c48baa149bc7c9e885
   m_configObjects: {}

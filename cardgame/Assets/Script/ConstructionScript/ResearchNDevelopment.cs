@@ -13,6 +13,8 @@ public class ResearchNDevelopment : Construction
         preBuild = true;
         base.Awake();
         inventoryManager = FindObjectOfType<InventoryManager>();
+        if(!fromB)
+        popUpScript.AddToQueue("Research and Development Builded");
     }
     public override void OnUse()
     {

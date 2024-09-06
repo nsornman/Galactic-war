@@ -12,11 +12,9 @@ public class AttackableBlock : MonoBehaviour
     public Color Marked;
     /*[SyncVar]*/ public bool Clicked;
     [SerializeField]private Player enemyPlayer;
-    private Player[] allPlayer;
 
     public void Awake()
     {
-        allPlayer = FindObjectsOfType<Player>();
         // for(int i = 0;i< allPlayer.Length ; i++){
         //     if(!allPlayer[i].isOwned){return;}
         //     enemyPlayer = allPlayer[i];

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public abstract class Construction : MonoBehaviour//NetworkBehaviour
 {
+
+    public bool fromB = false;
     [Header("Need to Assign")]
     public int healthPoint;
     public int increaseHPperLvl = 1;
@@ -14,12 +16,14 @@ public abstract class Construction : MonoBehaviour//NetworkBehaviour
     public bool preBuild;
     
     public Clickableblock clickableblock;
+    public PopUpScript popUpScript;
     /*[SyncVar]*/[SerializeField] protected Player player;
     [Header("Assign in carditem")]
     public int Levelcap;
     public abstract void OnUse();
     public virtual void Awake()
     {
+        popUpScript = FindObjectOfType<PopUpScript>();
         Transform parent = transform.parent;
         if(parent != null){
             Transform Grandparent = parent.parent;
@@ -31,6 +35,9 @@ public abstract class Construction : MonoBehaviour//NetworkBehaviour
                     player = grandGrandGrandParent.GetComponentInParent<Player>();
                 }
             }
+        }
+        if(clickableblock.forceCreate){
+            fromB = true;
         }
         Levelcap = clickableblock.blockdata.Levelcap;
     }

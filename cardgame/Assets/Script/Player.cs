@@ -55,4 +55,7 @@ public class Player : /*NetworkBehaviour*/MonoBehaviour
         inventoryManager.StartCard(ConstructCard , SkillCard);
         //Debug.Log("HAlO");
     }
+    public void PlayerACard(){
+        inventoryManager.PlayerAStart();
+    }
 }

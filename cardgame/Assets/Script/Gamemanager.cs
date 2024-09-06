@@ -5,6 +5,7 @@ using System.Security.Policy;
 using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Gamemanager : /*NetworkBehaviour*/MonoBehaviour
 {
@@ -19,18 +20,19 @@ public class Gamemanager : /*NetworkBehaviour*/MonoBehaviour
     
     [Header("Assign GameObjects")]
     public string attackPosTag;
-    public GameObject[] attackposition;
+    [SerializeField] private GameObject[] attackposition;
     public string playerPosTag;
-    public GameObject[] playerposition;
+    [SerializeField] private GameObject[] playerposition;
     public string changeUITag;
     public ChangeUI[] changeUI;
     public string CardUITag;
     public InventoryManager[] cardUI;
     public Camera[] Playercam;
-    [SerializeField] private Player[] player;
-    private Clickableblock[] clickableblocks;
-    [SerializeField] private Construction[] construction;
-    private PassiveSkill[] passiveSkill;
+    [SerializeField] private protected Player[] player;
+    private  protected Clickableblock[] clickableblocks;
+    [SerializeField] private protected Construction[] construction;
+    private protected PassiveSkill[] passiveSkill;
+    public PopUpScript popUpScript;
     [Header("Game Phase")]
     public bool changing;
     public float changeTime = 10f;
@@ -43,10 +45,10 @@ public class Gamemanager : /*NetworkBehaviour*/MonoBehaviour
     public int FreeAttackperround;
     /*[SyncVar]*/public float Timerunner;
     public enum GamePhase {None, Building, Attacking}
-    private enum SkillPhase {Build , Attack}
+    public enum SkillPhase {Build , Attack}
     /*[SyncVar]*/ public GamePhase currentPhase;
 
-    void FixedUpdate()
+    public virtual void FixedUpdate()
     {
         clickableblocks = FindObjectsOfType<Clickableblock>();
         player = FindObjectsOfType<Player>();
@@ -55,8 +57,9 @@ public class Gamemanager : /*NetworkBehaviour*/MonoBehaviour
         attackposition = GameObject.FindGameObjectsWithTag(attackPosTag); //need attack Pos to shuffle between 2 player
         construction = FindObjectsOfType<Construction>();
         passiveSkill = FindObjectsOfType<PassiveSkill>();
+        popUpScript = FindObjectOfType<PopUpScript>();
     }
-    void Start()
+    protected virtual void Start()
     {
         StartCoroutine(Waitfor());
     }
@@ -64,7 +67,7 @@ public class Gamemanager : /*NetworkBehaviour*/MonoBehaviour
     // {
     //     SetNewLives();
     // }
-    IEnumerator Waitfor(){
+    public virtual IEnumerator Waitfor(){
         yield return new WaitUntil(Waitfor2ndPlayer);
         changeUI = FindObjectsOfType<ChangeUI>();
         cardUI = FindObjectsOfType<InventoryManager>();
@@ -74,9 +77,10 @@ public class Gamemanager : /*NetworkBehaviour*/MonoBehaviour
         }
         StartBuildingPhase();
         SetNewLives();
+        //popUpScript.AddToQueue("Wait Finished");
     }
 
-    void Update()
+    protected void Update()
     {
         if(Input.GetKeyDown(KeyCode.F)){
             SetNewLives();
@@ -86,7 +90,7 @@ public class Gamemanager : /*NetworkBehaviour*/MonoBehaviour
             CheckPhase();
         }
     }
-    public bool Waitfor2ndPlayer(){
+    public virtual bool Waitfor2ndPlayer(){
         if(Playercam.Length> 1 && Playercam[1] != null){
             return true;
         }return false;
@@ -106,9 +110,10 @@ public class Gamemanager : /*NetworkBehaviour*/MonoBehaviour
         SetBlock();
         SetMats();
         SetUpCard();
+        //popUpScript.AddToQueue("SetNewLives");
     }
 
-    public void SetBlock()
+    public virtual void SetBlock()
     {
         for (int i = 0; i < clickableblocks.Length; i++)
         {
@@ -116,7 +121,7 @@ public class Gamemanager : /*NetworkBehaviour*/MonoBehaviour
             clickableblocks[i].NewBlock();
         }
     }
-    public void SetUpCard(){
+    public virtual void SetUpCard(){
         for(int i = 0;i< player.Length;i++){
             if(player[i].inventoryManager != null){
                 player[i].SetCard(StartingCC , StartingSC);
@@ -153,7 +158,7 @@ public class Gamemanager : /*NetworkBehaviour*/MonoBehaviour
         }
     }
 
-    public bool StillAlive()
+    public virtual bool StillAlive()
     {
         for (int i = 0; i < clickableblocks.Length; i++)
         {
@@ -172,9 +177,7 @@ public class Gamemanager : /*NetworkBehaviour*/MonoBehaviour
         for(int i= 0;i<player.Length;i++){
             player[i].GainMultiplier =1;
         }
-        for(int i = 0;i< Playercam.Length;i++){ //Not Supporting Own player building position
-            Warpto(i , playerposition[i]);
-        }
+        WarptoBuild();
         //Debug.Log("Setting cardUI to active");
         if (cardUI != null)
         {
@@ -197,7 +200,12 @@ public class Gamemanager : /*NetworkBehaviour*/MonoBehaviour
         //Debug.Log("Building Phase Started");
         return true;
     }
-    private void SwapAttackPositions()
+    public virtual void WarptoBuild(){
+        for(int i = 0;i< Playercam.Length;i++){ //Not Supporting Own player building position
+            Warpto(i , playerposition[i]);
+        }
+    }
+    private protected virtual void SwapAttackPositions()
     {
         if (attackposition.Length >= 2)
         {
@@ -206,7 +214,7 @@ public class Gamemanager : /*NetworkBehaviour*/MonoBehaviour
             attackposition[1] = temp;
         }
     }
-    public void StartAttackPhase()
+    public virtual void StartAttackPhase()
     {
         AttackingPhaseCount += 1;
         ResetAnySkill();
@@ -216,9 +224,7 @@ public class Gamemanager : /*NetworkBehaviour*/MonoBehaviour
         if(AttackingPhaseCount <= 1){
             SwapAttackPositions();
         }
-        for(int i = 0;i< Playercam.Length ; i++){ //Not Supporting Enemy multiple attack position / shuffing attack pos
-            Warpto(i , attackposition[i]);
-        }
+        WarptoAttack();
         UseConstructPerk(SkillPhase.Attack);
 
         if (cardUI != null)
@@ -235,14 +241,20 @@ public class Gamemanager : /*NetworkBehaviour*/MonoBehaviour
         currentPhase = GamePhase.Attacking;
         Timerunner = 0f; // Start Count
     }
+    public virtual void WarptoAttack(){
+        for(int i = 0;i< Playercam.Length ; i++){ //Not Supporting Enemy multiple attack position / shuffing attack pos
+            Warpto(i , attackposition[i]);
+        }
+    }
 
     public void EndGame()
     {
         // Code to handle end game logic
+        SceneManager.LoadScene(0);
         Debug.Log("Game Ended");
     }
 
-    private IEnumerator ChangePhaseAfterDelay(GamePhase newPhase)
+    public IEnumerator ChangePhaseAfterDelay(GamePhase newPhase)
     {
         changing = true;
         //Debug.Log("Waiting for change time...");
@@ -263,13 +275,13 @@ public class Gamemanager : /*NetworkBehaviour*/MonoBehaviour
         }
     }
 
-    private void Warpto(int index,GameObject position)
+    public void Warpto(int index,GameObject position)
     {
         Playercam[index].transform.position = position.transform.position;
         Playercam[index].transform.rotation = position.transform.rotation;
     }
 
-    private void UseConstructPerk(SkillPhase skillPhase){
+    private protected void UseConstructPerk(SkillPhase skillPhase){
         foreach (Construction construction in construction)
         {
             switch (skillPhase)

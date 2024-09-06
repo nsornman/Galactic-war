@@ -9,7 +9,7 @@ public class PlayButtonScript : MonoBehaviour
 {
     public void PlayGame()
     {
-        SceneManager.LoadSceneAsync(2);
+        SceneManager.LoadScene(1);
     }
 
     public void QuitGame()
@@ -19,11 +19,11 @@ public class PlayButtonScript : MonoBehaviour
 
     public void QuitMenu()
     {
-        SceneManager.LoadSceneAsync(1);
+        SceneManager.LoadScene(0);
     }
 
     public void Modemenu()
     {
-        SceneManager.LoadSceneAsync(3);
+        SceneManager.LoadScene(2);
     }
 }

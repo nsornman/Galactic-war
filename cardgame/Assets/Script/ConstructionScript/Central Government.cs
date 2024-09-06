@@ -29,6 +29,9 @@ public class CentralGovernment : Construction
         base.Awake();
         preBuild = true;
         gamemanager = FindObjectOfType<Gamemanager>();
+        if(!fromB){
+            popUpScript.AddToQueue("Central Government Builded");
+        }
     }
     public void Update(){
         constructions = FindObjectsOfType<Construction>();

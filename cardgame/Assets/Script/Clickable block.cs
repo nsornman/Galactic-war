@@ -10,7 +10,9 @@ public class Clickableblock : MonoBehaviour//NetworkBehaviour
     /*[SyncVar]*/ public int HP;
     /*[SyncVar]*/ public int maxHP;
     /*[SyncVar]*/ public bool hasDestroyed = false;
+    public GameObject blockrenderer;
     public GameObject BuildableBlock;
+    public GameObject pressedSound;
     //public GameObject AttackableBlock;
     [Header("For Debug")]
     public GameObject ModelHolder;
@@ -20,6 +22,7 @@ public class Clickableblock : MonoBehaviour//NetworkBehaviour
     public ConstructionCard blockdata;  //actual real time blockcard data
     public Player player;
     public bool havemodel = false;
+    public bool forceCreate = false;
     private void Awake()
     {
         Transform parent = this.transform.parent;
@@ -37,6 +40,8 @@ public class Clickableblock : MonoBehaviour//NetworkBehaviour
         }else{
             Debug.Log("parent = null");
         }
+        blockrenderer = transform.GetChild(0).gameObject;
+        pressedSound = Resources.Load<GameObject>("press sound");
     }
 
     public void Update(){
@@ -67,6 +72,7 @@ public class Clickableblock : MonoBehaviour//NetworkBehaviour
                     if(!havemodel){
                         blockdata.Use(modelPosition , this.BuildableBlock.gameObject.transform);
                         player.Pay(blockdata.Woodcost,blockdata.Metalcost,blockdata.Concretecost,blockdata.Stonecost);
+                        Instantiate(pressedSound , this.transform);
                         instantiated = blockdata.Instantiatemodel;
                         carddata.placed = true;
                         havemodel = true;
@@ -80,9 +86,31 @@ public class Clickableblock : MonoBehaviour//NetworkBehaviour
             }
         }
     }
+    public void CreateConstruct(ConstructionCard card){
+        Vector3 modelPosition = ModelHolder.transform.position;
+        blockdata = card;
+        if(!havemodel){
+            forceCreate = true;
+            card.Use(modelPosition , this.BuildableBlock.gameObject.transform);
+            instantiated = blockdata.Instantiatemodel;
+            havemodel = true;
+            // Set maxHP to blockdata's healthPoint when the model is instantiated
+            maxHP = blockdata.Model.GetComponent<Construction>().healthPoint;
+            HP = maxHP; // Initialize current HP to max HP
+            Debug.Log("Create "+ card.name+ " on "+ this.name);
+        }else{
+            Debug.Log("Create but already have model");
+        }
+    }
     public void DecreaseHP(int damage){
         if(HP >= 0){
             HP-= damage;
+            if(maxHP- HP==1){
+                SetColor(Color.yellow);
+            }else if(maxHP-HP >= 1){
+                SetColor(Color.red);
+            }
+            Debug.Log("Decreased");
         }
     }
     public void IncreaseHP(int increaseAmount){
@@ -117,4 +145,25 @@ public class Clickableblock : MonoBehaviour//NetworkBehaviour
         if(WoodLeft >= 0 && ConcreteLeft>=0 && StoneLeft >= 0 && MetalLeft >= 0) return true;
         return false;
     }
+    void SetColor(Color color)
+{
+    Renderer renderer = blockrenderer.GetComponentInChildren<Renderer>();
+    if (renderer != null)
+    {
+        // Create a new MaterialPropertyBlock
+        MaterialPropertyBlock block = new MaterialPropertyBlock();
+        
+        // Set the color property
+        block.SetColor("_Color", color);
+
+        // Apply the MaterialPropertyBlock to the renderer
+        renderer.SetPropertyBlock(block);
+
+        Debug.Log($"Color set to {color}");
+    }
+    else
+    {
+        Debug.LogWarning("Renderer component not found!");
+    }
+}
 }

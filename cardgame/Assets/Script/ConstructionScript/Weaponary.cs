@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Weaponary : Construction
 {
+    public override void Awake()
+    {
+        base.Awake();
+        if(!fromB)
+        popUpScript.AddToQueue("Weaponary Builded");
+    }
 
     public override void OnUse()
     {

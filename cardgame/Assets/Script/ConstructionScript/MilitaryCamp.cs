@@ -8,6 +8,8 @@ public class MilitaryCamp : Construction
     {
         base.Awake();
         preAttack = true;
+        if(!fromB)
+        popUpScript.AddToQueue("Military Camp Builded");
     }
 
     public override void OnUse()

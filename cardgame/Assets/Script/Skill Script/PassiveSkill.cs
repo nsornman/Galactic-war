@@ -8,10 +8,12 @@ public class PassiveSkill : MonoBehaviour
     [Header("Auto-Assign")]
     public Player player;
     public InventoryManager IM;
+    public PlayerBMove thirdParties;
     public void Awake()
     {
-        player = FindObjectOfType<Player>();
-        IM = FindObjectOfType<InventoryManager>();
+        thirdParties = FindObjectOfType<PlayerBMove>();
+        player = GetComponentInParent<Player>();
+        IM = player.inventoryManager;
         switch (buff)
         {
             case Buff.IncreaseResourceGain:
@@ -21,8 +23,13 @@ public class PassiveSkill : MonoBehaviour
                 player.CostMultiplier *= 0.5f;
                 break;
             case Buff.Add2MoreDrawer:
-                for(int i=0;i<2;i++){
-                    IM.AddfromRandomArr(ShufflewithPercentage(50));
+                if(!thirdParties.incontrol){
+                    for(int i=0;i<2;i++){
+                        IM.AddfromRandomArr(ShufflewithPercentage(50));
+                    }
+                }else{
+                    IM.AddNonSpecificCard(thirdParties.card1);
+                    IM.AddNonSpecificCard(thirdParties.card2);
                 }
                 break;
         }

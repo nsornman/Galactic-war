@@ -11,6 +11,10 @@ public class InventoryManager : MonoBehaviour
     public CardItem[] card;
     public SkillCard[] SC;
     public ConstructionCard[] CC;
+    public SkillCard[] playerASkill;
+    public ConstructionCard[] playerACons;
+    public SkillCard[] playerBSkill;
+    public ConstructionCard[] playerBCons;
     void Start()
     {
         // skillslots = FindObjectsOfType<Skillslot>();
@@ -48,6 +52,22 @@ public class InventoryManager : MonoBehaviour
             AddSkillitem(SC[randomSCindice()]);
         }
         //Debug.Log("HI");
+    }
+    public void PlayerAStart(){
+        for(int i = 0;i<playerACons.Length;i++){
+            AddConstructitem(playerACons[i]);
+        }
+        for(int j = 0;j<playerASkill.Length;j++){
+            AddSkillitem(playerASkill[j]);
+        }
+    }
+    public void PlayerBStart(){
+        for(int i = 0;i<playerACons.Length;i++){
+            AddConstructitem(playerACons[i]);
+        }
+        for(int j = 0;j<playerASkill.Length;j++){
+            AddSkillitem(playerASkill[j]);
+        }
     }
     public int randomSCindice(){
         if (SC.Length == 0)
@@ -115,6 +135,7 @@ public class InventoryManager : MonoBehaviour
             constructslots[i].SelectedPanel.SetActive(false);
             constructslots[i].selected = false;
         }
+        Debug.Log("Deselected");
     }
     void EmptyAllSlot(){
         for (int i = 0; i < skillslots.Length; i++)
@@ -134,6 +155,13 @@ public class InventoryManager : MonoBehaviour
             AddSkillitem(SC[randomSCindice()]);
         }else{
             AddConstructitem(CC[randomCCindice()]);
+        }
+    }
+    public void AddNonSpecificCard(CardItem card){
+        if(card.Type == itemtype.Contructionitem){
+            AddConstructitem(card);
+        }else if(card.Type == itemtype.Skillitem){
+            AddSkillitem(card);
         }
     }
 

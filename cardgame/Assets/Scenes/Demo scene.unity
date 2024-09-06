@@ -503,6 +503,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 438328170104702304}
     m_Modifications:
+    - target: {fileID: 1406539466126107635, guid: 4ea5826f300c5b84abebcf2db39ea0fc, type: 3}
+      propertyPath: m_TerrainData
+      value: 
+      objectReference: {fileID: 15600000, guid: f53373d95eb3dd44eb42c6909aece813, type: 2}
     - target: {fileID: 1551560291245085030, guid: 4ea5826f300c5b84abebcf2db39ea0fc, type: 3}
       propertyPath: m_LocalPosition.x
       value: -34.8
